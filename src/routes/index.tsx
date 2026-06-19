@@ -686,20 +686,23 @@ function Offer() {
         <div className="mx-auto max-w-3xl text-center">
           <span className="text-xs font-medium uppercase tracking-wider text-[var(--rose)]">Pricing</span>
           <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-5xl">
-            You're not renting software. You're buying an asset.
+            The Salon Independence Kit.
           </h2>
           <p className="mt-5 text-pretty text-lg text-muted-foreground">
-            A comparable custom build from an agency runs <span className="font-mono text-foreground">$30k–$60k</span>.
-            Either of these options recovers its cost in saved Booksy, Square, and admin overhead — usually inside 6 months for a 10-chair salon.
+            You're not renting software. You're buying an asset.
+            A comparable custom build runs <span className="font-mono text-foreground">$30k–$60k</span> from an agency.
+            Both options recover their cost inside 6 months for a 10-chair salon.
           </p>
 
-          {/* Anchor: what you're losing right now */}
-          <div className="mx-auto mt-7 inline-flex max-w-2xl flex-col items-center gap-2 rounded-2xl border border-[var(--rose)]/40 bg-[var(--blush)]/40 px-5 py-4 text-sm text-[var(--ink)] sm:flex-row sm:gap-4">
-            <AlertTriangle className="h-4 w-4 shrink-0" />
-            <span className="text-pretty text-center sm:text-left">
-              A 10-chair, $40k/month salon is bleeding roughly{" "}
-              <span className="font-semibold">$17,500–$21,000/year</span> to subscription + processing fees alone.
-              The real question isn't <em>"can I afford this?"</em> — it's <em>"how much longer can I afford Booksy?"</em>
+          {/* Genuine urgency: price increase + guarantee chip */}
+          <div className="mx-auto mt-7 flex max-w-2xl flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--rose)]/40 bg-[var(--blush)]/40 px-4 py-1.5 text-sm font-medium text-[var(--ink)]">
+              <Clock className="h-3.5 w-3.5" />
+              Price increases to $997 on {PRICE_LOCK_DATE} — lock in $797 today
+            </span>
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-sm font-medium text-foreground">
+              <Shield className="h-3.5 w-3.5" />
+              60-Day Salon Savings Guarantee
             </span>
           </div>
         </div>
@@ -709,41 +712,79 @@ function Offer() {
           <div className="flex flex-col rounded-2xl border border-border bg-card p-8 shadow-[var(--shadow-soft)]">
             <div className="flex items-baseline justify-between">
               <div>
-                <div className="text-xs uppercase tracking-wider text-muted-foreground">The Asset</div>
-                <div className="mt-1 text-lg font-medium">Single-Use License</div>
-                <div className="mt-3 text-4xl font-semibold tracking-tight">$797</div>
+                <div className="text-xs uppercase tracking-wider text-muted-foreground">DIY License</div>
+                <div className="mt-1 text-lg font-medium">Install it yourself</div>
+                <div className="mt-3 flex items-baseline gap-2">
+                  <span className="text-4xl font-semibold tracking-tight">$797</span>
+                  <span className="text-sm text-muted-foreground line-through">$3,385 value</span>
+                </div>
                 <div className="text-xs text-muted-foreground">one-time · install yourself</div>
               </div>
-              <span className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-foreground">
-                Best value
-              </span>
             </div>
             <p className="mt-5 text-sm text-muted-foreground">
-              The rights to use the proprietary codebase at your single location. You install it
-              yourself using step-by-step documentation written for non-developers. Most owners are
-              live in an afternoon.
+              The license to use the codebase at your single location. Most owners are live in an afternoon
+              with plain-English docs — no coding required.
             </p>
             <ul className="mt-6 space-y-2.5 text-sm">
               {[
-                "Full salon system source code",
-                "Plain-English setup guide (no jargon)",
-                "Stripe, Twilio SMS & email-ready integrations",
-                "Free updates for 12 months",
-                "Email support during setup",
-              ].map((x) => (
-                <li key={x} className="flex items-start gap-2.5">
+                { v: "$2,500", x: "Full booking website on your own domain" },
+                { v: "$2,000", x: "Owner dashboard + real-time floor board" },
+                { v: "$1,500", x: "POS + Stripe card reader integration" },
+                { v: "$800",   x: "Per-stylist commission tracking + CSV export" },
+                { v: "$600",   x: "Twilio SMS confirmations + 12 months of updates" },
+              ].map((row) => (
+                <li key={row.x} className="flex items-start gap-2.5">
                   <Check className="mt-0.5 h-4 w-4 shrink-0 text-[var(--rose)]" />
-                  <span>{x}</span>
+                  <span className="flex-1"><span className="text-muted-foreground">{row.x}</span></span>
+                  <span className="font-mono text-xs text-muted-foreground">{row.v}</span>
                 </li>
               ))}
             </ul>
-            <div className="mt-auto pt-7">
-              <CalLink location="offer_diy" className="w-full">
-                Book a free call
+            <div className="mt-6 rounded-xl border border-dashed border-[var(--rose)]/40 bg-[var(--blush)]/20 p-4">
+              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--rose)]">
+                <Gift className="h-3.5 w-3.5" /> Bonuses included
+              </div>
+              <ul className="mt-3 space-y-1.5 text-sm">
+                <li className="flex items-center justify-between gap-3">
+                  <span>The Booksy Escape Kit — migration playbook</span>
+                  <span className="font-mono text-xs text-muted-foreground">$497</span>
+                </li>
+                <li className="flex items-center justify-between gap-3">
+                  <span>Salon Marketing Playbook — 50 SMS + email templates</span>
+                  <span className="font-mono text-xs text-muted-foreground">$397</span>
+                </li>
+                <li className="flex items-center justify-between gap-3">
+                  <span>Setup Concierge Call (30 min)</span>
+                  <span className="font-mono text-xs text-muted-foreground">$197</span>
+                </li>
+                <li className="flex items-center justify-between gap-3">
+                  <span>Gift Card Module</span>
+                  <span className="font-mono text-xs text-muted-foreground">$297</span>
+                </li>
+              </ul>
+            </div>
+            <details className="mt-4 rounded-xl border border-border bg-background/60 p-4 text-sm">
+              <summary className="cursor-pointer font-medium">What you'll need to install it</summary>
+              <p className="mt-2 text-muted-foreground">
+                A domain name, a Stripe account, a Twilio account, and 2–3 hours of focused time. The runbook walks
+                you through each step — no code editing required.
+              </p>
+            </details>
+            <div className="mt-auto pt-7 space-y-3">
+              <a
+                href="mailto:support@salonsuite.com?subject=Buy%20the%20Salon%20Independence%20Kit%20%E2%80%94%20%24797"
+                onClick={() => track("cta_click", { location: "offer_diy_buy", label: "Buy Now — $797" })}
+                className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--ink)] pl-6 pr-5 py-3.5 text-sm font-medium text-[var(--background)] shadow-[var(--shadow-elegant)] transition hover:-translate-y-px"
+              >
+                Buy Now — $797
+                <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+              </a>
+              <CalLink location="offer_diy_call" variant="secondary" className="w-full">
+                Book a free 15-min call
                 <ArrowRight className="h-4 w-4" />
               </CalLink>
-              <p className="mt-3 text-pretty text-center text-xs text-muted-foreground">
-                Pays for itself in about <span className="font-medium text-foreground">3–4 months</span> of subscription + processing savings
+              <p className="text-pretty text-center text-xs text-muted-foreground">
+                Pays for itself in <span className="font-medium text-foreground">3–4 months</span> of fee savings
               </p>
             </div>
           </div>
@@ -755,29 +796,29 @@ function Offer() {
             </span>
             <div className="flex items-baseline justify-between">
               <div>
-                <div className="text-xs uppercase tracking-wider text-muted-foreground">Asset + Labor</div>
-                <div className="mt-1 text-lg font-medium">Integration & Deployment</div>
+                <div className="text-xs uppercase tracking-wider text-muted-foreground">Done-For-You Setup</div>
+                <div className="mt-1 text-lg font-medium">We launch it for you</div>
                 <div className="mt-3 flex items-baseline gap-2">
                   <span className="text-4xl font-semibold tracking-tight">$5,797</span>
+                  <span className="text-sm text-muted-foreground line-through">$16,685 value</span>
                 </div>
                 <div className="text-xs text-muted-foreground">$797 license + $5,000 deployment</div>
               </div>
             </div>
             <p className="mt-5 text-sm text-muted-foreground">
-              I customize the template, set up your private database, configure Stripe payments, build the
-              Twilio text reminder workflows, and deploy the site to your domain. You hand me your logo and
-              Stripe login — I do the rest. Live in 5–10 business days.
+              I customize the template, set up your database, configure Stripe and Twilio, and deploy to your domain.
+              You hand me your logo and a Stripe login. Live in 5–10 business days.
             </p>
             <ul className="mt-6 space-y-2.5 text-sm">
               {[
-                "Everything in the Single-Use License, plus:",
+                "Everything in the DIY License, plus:",
                 "Template customized to your brand & services",
-                "Private Supabase database provisioned & secured",
+                "Private database provisioned & secured",
                 "Stripe payment processing configured end-to-end",
                 "Twilio SMS reminder workflows built",
                 "Site deployed to your custom domain",
-                "Migration from Booksy / Vagaro / Square",
-                "60 days of email support · optional $99/mo after",
+                "Full migration from Booksy / Vagaro / Square",
+                "12 months priority support (no $99/mo fee)",
               ].map((x, i) => (
                 <li key={x} className="flex items-start gap-2.5">
                   <Check className={`mt-0.5 h-4 w-4 shrink-0 ${i === 0 ? "text-muted-foreground" : "text-[var(--rose)]"}`} />
@@ -785,26 +826,71 @@ function Offer() {
                 </li>
               ))}
             </ul>
-            <div className="mt-auto pt-7">
-              <CalLink location="offer_dfy" className="w-full">
-                Book a free call
+            <div className="mt-6 rounded-xl border border-dashed border-[var(--rose)]/40 bg-[var(--blush)]/20 p-4">
+              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--rose)]">
+                <Gift className="h-3.5 w-3.5" /> All DIY bonuses + DFY exclusives
+              </div>
+              <ul className="mt-3 space-y-1.5 text-sm">
+                <li className="flex items-center justify-between gap-3">
+                  <span>Priority Booksy/Vagaro migration sprint</span>
+                  <span className="font-mono text-xs text-muted-foreground">$997</span>
+                </li>
+                <li className="flex items-center justify-between gap-3">
+                  <span>Staff training session (60 min)</span>
+                  <span className="font-mono text-xs text-muted-foreground">$497</span>
+                </li>
+                <li className="flex items-center justify-between gap-3">
+                  <span>Custom branding package</span>
+                  <span className="font-mono text-xs text-muted-foreground">$2,500</span>
+                </li>
+              </ul>
+            </div>
+            <div className="mt-auto pt-7 space-y-3">
+              <a
+                href="mailto:support@salonsuite.com?subject=Done-For-You%20Setup%20%E2%80%94%20%245%2C797"
+                onClick={() => track("cta_click", { location: "offer_dfy_buy", label: "Buy Now — $5,797" })}
+                className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--ink)] pl-6 pr-5 py-3.5 text-sm font-medium text-[var(--background)] shadow-[var(--shadow-elegant)] transition hover:-translate-y-px"
+              >
+                Buy Now — $5,797
+                <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+              </a>
+              <CalLink location="offer_dfy_call" variant="secondary" className="w-full">
+                Book a free 15-min call
                 <ArrowRight className="h-4 w-4" />
               </CalLink>
-              <p className="mt-3 text-pretty text-center text-xs text-muted-foreground">
-                Pays for itself in roughly <span className="font-medium text-foreground">5–7 months</span> of subscription + processing savings
+              <p className="text-pretty text-center text-xs text-muted-foreground">
+                Pays for itself in <span className="font-medium text-foreground">5–7 months</span> of fee savings
               </p>
             </div>
           </div>
         </div>
 
-        <div className="mx-auto mt-10 max-w-2xl text-center">
-          <p className="inline-flex items-center gap-2 rounded-full border border-[var(--rose)]/40 bg-[var(--blush)]/60 px-4 py-2 text-sm font-medium text-[var(--ink)]">
-            <Calendar className="h-4 w-4" />
-            Taking 3 new Done-For-You salons this quarter. 2 spots left.
-          </p>
-          <p className="mt-4 text-sm text-muted-foreground">
-            Not sure which is right? Book a free 15-minute call and we'll figure it out together.
-          </p>
+        {/* Guarantee block + ethical scarcity */}
+        <div className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="rounded-2xl border border-border bg-card p-6">
+            <div className="flex items-center gap-3">
+              <span className="grid h-10 w-10 place-items-center rounded-full bg-[var(--blush)] text-[var(--ink)]">
+                <Shield className="h-5 w-5" />
+              </span>
+              <h3 className="text-base font-semibold">The 60-Day Salon Savings Guarantee</h3>
+            </div>
+            <p className="mt-3 text-sm text-muted-foreground">
+              Install the system. If you haven't saved at least <span className="font-medium text-foreground">$1,000 in fees</span> within
+              60 days, we refund every cent — and help you migrate back. You literally cannot lose.
+            </p>
+          </div>
+          <div className="rounded-2xl border border-border bg-card p-6">
+            <div className="flex items-center gap-3">
+              <span className="grid h-10 w-10 place-items-center rounded-full bg-[var(--blush)] text-[var(--ink)]">
+                <Calendar className="h-5 w-5" />
+              </span>
+              <h3 className="text-base font-semibold">Why only 3 Done-For-You spots / quarter</h3>
+            </div>
+            <p className="mt-3 text-sm text-muted-foreground">
+              I personally configure every deployment to keep quality high. I cap at 3 per quarter.
+              <span className="font-medium text-foreground"> Current availability: 2 of 3 open.</span>
+            </p>
+          </div>
         </div>
       </div>
     </section>
