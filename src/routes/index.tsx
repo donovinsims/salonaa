@@ -885,19 +885,42 @@ function Offer() {
 function Footer() {
   return (
     <footer className="border-t border-border bg-background">
-      <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-4 px-5 py-10 text-sm text-muted-foreground sm:flex-row sm:items-center">
-        <div className="flex items-center gap-2">
-          <span className="grid h-7 w-7 place-items-center rounded-md bg-[var(--ink)] text-[var(--background)]">
-            <Sparkles className="h-3.5 w-3.5" />
-          </span>
-          <span className="font-medium text-foreground">Salon Suite</span>
-          <span>© {new Date().getFullYear()}</span>
+      <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 text-sm text-muted-foreground sm:grid-cols-3">
+        <div>
+          <div className="flex items-center gap-2">
+            <span className="grid h-7 w-7 place-items-center rounded-md bg-[var(--ink)] text-[var(--background)]">
+              <Sparkles className="h-3.5 w-3.5" />
+            </span>
+            <span className="font-medium text-foreground">Salon Suite</span>
+          </div>
+          <p className="mt-3 max-w-xs text-xs">
+            The Salon Independence Kit — own your booking site, customer list, and payments.
+            One-time fee. Forever yours.
+          </p>
+          <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-foreground">
+            <Shield className="h-3 w-3" /> 60-Day Salon Savings Guarantee
+          </p>
         </div>
-        <div className="flex gap-6">
-          <a href="#features" className="hover:text-foreground">Features</a>
-          <a href="#fit" className="hover:text-foreground">Who it's for</a>
-          <a href="#offer" className="hover:text-foreground">Pricing</a>
-          <a href="#faq" className="hover:text-foreground">FAQ</a>
+        <div>
+          <div className="text-xs font-semibold uppercase tracking-wider text-foreground">Explore</div>
+          <ul className="mt-3 space-y-2">
+            <li><a href="#features" className="hover:text-foreground">Features</a></li>
+            <li><a href="#fit" className="hover:text-foreground">Who it's for</a></li>
+            <li><a href="#offer" className="hover:text-foreground">Pricing</a></li>
+            <li><a href="#faq" className="hover:text-foreground">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <div className="text-xs font-semibold uppercase tracking-wider text-foreground">Contact</div>
+          <ul className="mt-3 space-y-2">
+            <li className="flex items-center gap-2"><Mail className="h-3.5 w-3.5" /> <a href="mailto:support@salonsuite.com" className="hover:text-foreground">support@salonsuite.com</a></li>
+            <li className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5" /> Salon Suite · Austin, TX</li>
+          </ul>
+        </div>
+      </div>
+      <div className="border-t border-border/60">
+        <div className="mx-auto max-w-6xl px-5 py-4 text-xs text-muted-foreground">
+          © {new Date().getFullYear()} Salon Suite. You own the code. We don't.
         </div>
       </div>
     </footer>
