@@ -290,23 +290,33 @@ function Nav() {
           <a href="#features" className="hover:text-foreground">Features</a>
           <a href="#fit" className="hover:text-foreground">Who it's for</a>
           <a href="#offer" className="hover:text-foreground">Pricing</a>
+          <a href="#faq" className="hover:text-foreground">FAQ</a>
         </nav>
-        <button
-          type="button"
-          data-cal-link={CAL_LINK}
-          data-cal-namespace=""
-          data-cal-config='{"layout":"month_view","theme":"light"}'
-          onMouseEnter={() => void loadCal()}
-          onFocus={() => void loadCal()}
-          onTouchStart={() => void loadCal()}
-          onClick={() => {
-            void loadCal();
-            track("cta_click", { location: "nav" });
-          }}
-          className="rounded-full bg-[var(--ink)] px-4 py-2 text-sm font-medium text-[var(--background)] transition hover:opacity-90"
-        >
-          Book a free call
-        </button>
+        <div className="flex items-center gap-2">
+          <a
+            href="#offer"
+            onClick={() => track("cta_click", { location: "nav_buy", label: "Buy — $797" })}
+            className="hidden rounded-full border border-border bg-card px-3.5 py-2 text-sm font-medium text-foreground transition hover:bg-muted sm:inline-flex"
+          >
+            Buy — $797
+          </a>
+          <button
+            type="button"
+            data-cal-link={CAL_LINK}
+            data-cal-namespace=""
+            data-cal-config='{"layout":"month_view","theme":"light"}'
+            onMouseEnter={() => void loadCal()}
+            onFocus={() => void loadCal()}
+            onTouchStart={() => void loadCal()}
+            onClick={() => {
+              void loadCal();
+              track("cta_click", { location: "nav" });
+            }}
+            className="rounded-full bg-[var(--ink)] px-4 py-2 text-sm font-medium text-[var(--background)] transition hover:opacity-90"
+          >
+            Book a free 15-min call
+          </button>
+        </div>
       </div>
     </header>
   );
