@@ -134,25 +134,25 @@ const PRICE_LOCK_DATE = "July 15";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Own Your Salon's Booking Site — Stop Paying Booksy & Square Fees" },
+      { title: "The Salon Independence Kit — Own Your Booking Site. Stop the $15k Booksy Tax." },
       {
         name: "description",
         content:
-          "A complete salon booking site, POS, and dashboard built for nail salon owners. Stop paying $200/mo in Booksy fees. Single-use license $797 — save $10,000+/year.",
+          "Own your booking site, POS, and back office for a one-time $797. 10-chair salons save $15k–$21k/year vs Booksy + Square. Backed by the 60-Day Salon Savings Guarantee.",
       },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { property: "og:title", content: "Stop renting your customers from Booksy. Own your salon's booking site." },
+      { property: "og:title", content: "Run Your Salon Without the $15,000 Booksy Tax" },
       {
         property: "og:description",
         content:
-          "Complete nail salon booking site, POS, dashboard, and commission tracker. One-time license. Save $10,000+/year vs Booksy + Square.",
+          "Own your booking site, POS, dashboard, and customer list — for a one-time $797. 60-Day Salon Savings Guarantee.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Own your nail salon's booking site" },
+      { name: "twitter:title", content: "The Salon Independence Kit" },
       {
         name: "twitter:description",
-        content: "Stop paying monthly Booksy fees. One-time license, save $10k+/year.",
+        content: "Own your salon booking site for a one-time $797. Save $15k+/year.",
       },
     ],
     scripts: [
