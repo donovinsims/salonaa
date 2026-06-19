@@ -210,14 +210,25 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-[var(--ink)] focus:px-4 focus:py-2 focus:text-sm focus:text-[var(--background)]"
+      >
+        Skip to content
+      </a>
       <Nav />
-      <Hero />
-      <Pain />
-      <Solution />
-      <Features />
-      <Disqualify />
-      <Offer />
-      <FAQ />
+      <main id="main">
+        <Hero />
+        <SocialProof />
+        <Pain />
+        <Solution />
+        <HowItWorks />
+        <Features />
+        <Disqualify />
+        <Offer />
+        <FinalCTA />
+        <FAQ />
+      </main>
       <Footer />
     </div>
   );
