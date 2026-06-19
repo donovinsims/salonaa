@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 import {
   Sparkles,
   DollarSign,
@@ -12,7 +12,6 @@ import {
   Search,
   Activity,
   Wrench,
-  AlertTriangle,
   Star,
   Quote,
   Shield,
