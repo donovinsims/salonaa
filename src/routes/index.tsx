@@ -327,42 +327,42 @@ function Hero() {
     <section id="top" className="relative overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
       <div className="mx-auto max-w-6xl px-5 pb-24 pt-20 sm:pt-28">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 text-xs text-muted-foreground backdrop-blur">
-            <span className="h-1.5 w-1.5 rounded-full bg-[var(--rose)]" />
-            Built for nail salon owners
-          </span>
-          <h1 className="mt-6 text-balance text-4xl font-semibold tracking-tight sm:text-6xl">
-            Stop renting your customers from{" "}
-            <span className="relative whitespace-nowrap text-[var(--rose)]">Booksy</span>.
+          <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-6xl">
+            Run your salon without the{" "}
+            <span className="relative whitespace-nowrap text-[var(--rose)]">$15,000 Booksy tax</span>.
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg text-muted-foreground sm:text-xl">
-            A complete booking site, POS, and back-office for your salon — on your own domain, with your own Stripe account.
-            For a typical 10-chair salon, that's roughly{" "}
-            <span className="font-semibold text-foreground">$15,000–$18,000/year</span> kept out of seat fees and processing markups.
+            Own your booking site, your customer list, and every dollar you process — for a one-time fee.
+            <br className="hidden sm:inline" />
+            No subscriptions. No per-staff charges. No surprise price hikes.
           </p>
 
-          <div className="mx-auto mt-10 flex max-w-md flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:justify-center">
-            <CalLink location="hero_primary" className="sm:w-auto">
+          <p className="mx-auto mt-5 inline-flex items-center gap-2 rounded-full border border-[var(--rose)]/40 bg-[var(--blush)]/40 px-4 py-1.5 text-sm font-medium text-[var(--ink)]">
+            <Check className="h-4 w-4" />
+            10-chair salons keep <span className="font-semibold">$15k–$21k/year</span> in fees they pay right now
+          </p>
+
+          <div className="mx-auto mt-9 flex max-w-md flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:justify-center">
+            <a
+              href="#offer"
+              onClick={() => track("cta_click", { location: "hero_buy", label: "Buy — $797" })}
+              className="group inline-flex items-center justify-center gap-2 rounded-full bg-[var(--ink)] pl-6 pr-5 py-3.5 text-sm font-medium text-[var(--background)] shadow-[var(--shadow-elegant)] transition hover:-translate-y-px"
+            >
+              Buy the Salon Independence Kit — $797
+              <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+            </a>
+            <CalLink location="hero_call" variant="secondary" className="sm:w-auto">
               Book a free 15-min call
               <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
             </CalLink>
-            <a
-              href="#offer"
-              onClick={() => track("cta_click", { location: "hero_secondary", label: "See pricing" })}
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card pl-6 pr-5 py-3.5 text-sm font-medium text-foreground transition hover:bg-muted"
-            >
-              See pricing
-            </a>
           </div>
 
-          <div className="mx-auto mt-8 flex max-w-xl flex-col items-center gap-3 text-xs text-muted-foreground sm:flex-row sm:justify-center sm:gap-5">
-            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--rose)]/40 bg-[var(--blush)]/60 px-3 py-1 font-medium text-[var(--ink)]">
-              <AlertTriangle className="h-3.5 w-3.5" />
-              A 10-chair salon on Booksy + Square loses ~$1,300 every month. Stop the bleed.
-            </span>
-            <span className="hidden sm:inline">·</span>
-            <span>One-time payment · You own it forever</span>
-          </div>
+          <p className="mx-auto mt-6 max-w-xl text-xs text-muted-foreground">
+            Best for salons with 2+ stylists doing $20k+/month · Backed by the{" "}
+            <a href="#offer" className="font-medium text-foreground underline-offset-2 hover:underline">
+              60-Day Salon Savings Guarantee
+            </a>
+          </p>
         </div>
 
         {/* Product mock */}
