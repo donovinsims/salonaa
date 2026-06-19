@@ -367,7 +367,14 @@ function Hero() {
 
         {/* Product mock */}
         <div className="mx-auto mt-16 max-w-5xl">
-          <div className="rounded-2xl border border-border bg-card p-3 shadow-[var(--shadow-elegant)]">
+          <div
+            className="relative rounded-2xl border border-border bg-card p-3 shadow-[var(--shadow-elegant)]"
+            role="img"
+            aria-label="Preview of the owner dashboard with sample data"
+          >
+            <span className="absolute -top-3 left-5 z-10 inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+              <Sparkle className="h-3 w-3" /> Preview · sample data
+            </span>
             <div className="flex items-center gap-1.5 px-2 pb-3">
               <span className="h-2.5 w-2.5 rounded-full bg-[var(--blush)]" />
               <span className="h-2.5 w-2.5 rounded-full bg-muted" />
