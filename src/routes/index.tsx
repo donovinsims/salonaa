@@ -68,45 +68,30 @@ function track(event: string, payload: TrackPayload = {}) {
 
 const FAQ_ITEMS: { q: string; a: string }[] = [
   {
-    q: "How much will I actually save?",
-    a: "Most salons we work with were paying $200–$400/month in Booksy or Vagaro seat fees plus 2.6% + $0.10 on every Square swipe. On $40k/month in card volume, that's around $1,160/mo in processing alone. Owning your own system typically saves $10,000–$18,000 per year — the license pays for itself in under 30 days.",
+    q: "I'm not a developer. Which option is for me?",
+    a: "If you're comfortable copying API keys and following step-by-step instructions, the $797 DIY License works great — the docs are written for non-developers. If you'd rather not touch any tech, the $5,797 Done-For-You Setup means we install, brand, configure payments, and launch on your domain. You just hand us your logo and a Stripe login.",
   },
   {
-    q: "I'm a salon owner, not a developer. Which option is for me?",
-    a: "If you (or anyone on your team) is comfortable copying API keys and following step-by-step instructions, the $797 single-use license works great — the documentation is written for non-developers. If you'd rather not touch any tech, the Integration & Deployment package ($5,797 total) means I install, brand, configure payments, and launch the whole thing on your domain. You just hand me your logo and Stripe login.",
+    q: "How fast can I launch?",
+    a: "DIY: a focused afternoon if you follow the runbook. Done-For-You: live in 5–10 business days. Either way, you're off Booksy in under two weeks.",
   },
   {
-    q: "Do I keep my own customers and payments?",
-    a: "Yes. Every booking comes through your own website on your own domain. Payments go directly to your own Stripe account — nothing routes through Booksy, Vagaro, or any middleman. You own the customer list, the booking history, and every dollar (minus Stripe's standard rate).",
-  },
-  {
-    q: "What do I actually get?",
-    a: "A complete salon system: a public booking website (services, gallery, gift cards, 4-step booking), an owner dashboard (daily revenue, calendar, real-time floor board), a POS for walk-ins, commission tracking per stylist with CSV export, Twilio SMS confirmations and reminders, and online deposit collection. It's everything Booksy + Square does, but you own it.",
-  },
-  {
-    q: "How long until I'm taking bookings?",
-    a: "Single-use license: a focused afternoon if you follow the runbook. Integration & Deployment: I launch in 5–10 business days. Either way, you're off Booksy and onto your own system in under two weeks.",
-  },
-  {
-    q: "Is the Integration & Deployment ongoing support a subscription?",
-    a: "The $5,000 deployment fee includes 60 days of email support. After that, ongoing support is optional — $99/month covers updates, fixes, and adding new staff or services. Cancel anytime. You always own the code.",
-  },
-  {
-    q: "Can I switch from Booksy or Vagaro without losing my client list?",
+    q: "Can I migrate from Booksy or Vagaro without losing my client list?",
     a: "Yes. We import your existing client list, upcoming appointments, and service catalog from a CSV export. Most salons make the switch over a single weekend with zero downtime.",
   },
   {
-    q: "What if I want a refund?",
-    a: "14 days, no questions asked. If the system isn't a fit, you get your money back. The 'Not for you' section above is us being honest upfront — we'd rather not sell you something that won't work.",
+    q: "What's your refund policy?",
+    a: "The 60-Day Salon Savings Guarantee: if you haven't saved at least $1,000 in subscription and processing fees within 60 days, we refund every cent — and help you migrate back to your old system. You literally cannot lose.",
   },
   {
     q: "What happens to my booking site if your company disappears?",
-    a: "Nothing. You own the code, it lives on your own hosting, your own Stripe account, your own database. No 'phone home' calls to our servers. Even if we vanished tomorrow, your salon keeps running exactly the same.",
+    a: "Nothing. You own the code. It lives on your own hosting, your own Stripe account, your own database. No 'phone home' calls to our servers. Even if we vanished tomorrow, your salon keeps running exactly the same.",
   },
 ];
 
 // Surfaced answers (shown open by default) — top-of-funnel trust questions.
-const FAQ_DEFAULT_OPEN = ["q-0", "q-3", "q-4"];
+// Index 3 = refund / guarantee, Index 4 = "what if you disappear" (the #1 trust objection).
+const FAQ_DEFAULT_OPEN = ["q-3", "q-4"];
 
 const TESTIMONIALS = [
   {
