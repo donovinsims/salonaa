@@ -492,7 +492,7 @@ function Solution() {
     <section className="mx-auto max-w-6xl px-5 py-24">
       <div className="grid items-center gap-12 md:grid-cols-2">
         <div>
-          <span className="text-xs font-medium uppercase tracking-wider text-[var(--rose)]">The fix</span>
+          <span className="text-xs font-medium uppercase tracking-wider text-[var(--rose)]">The product</span>
           <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
             One system. Your website, bookings, POS, and back office.
           </h2>
