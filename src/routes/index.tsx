@@ -924,14 +924,13 @@ function FAQ() {
     <section id="faq" className="border-t border-border/60 bg-card">
       <div className="mx-auto max-w-3xl px-5 py-24">
         <div className="text-center">
-          <span className="text-xs font-medium uppercase tracking-wider text-[var(--rose)]">
-            Questions before you book a call
-          </span>
+          <span className="text-xs font-medium uppercase tracking-wider text-[var(--rose)]">FAQ</span>
           <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-            The stuff salon owners actually ask.
+            FAQ
           </h2>
+          <p className="mt-3 text-sm text-muted-foreground">The stuff salon owners actually ask.</p>
         </div>
-        <Accordion type="single" collapsible className="mt-10">
+        <Accordion type="multiple" defaultValue={FAQ_DEFAULT_OPEN} className="mt-10">
           {FAQ_ITEMS.map((item, i) => (
             <AccordionItem key={item.q} value={`q-${i}`}>
               <AccordionTrigger
