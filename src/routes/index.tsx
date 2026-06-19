@@ -963,3 +963,108 @@ function FAQ() {
     </section>
   );
 }
+
+// ---- New sections ---------------------------------------------------------
+
+function SocialProof() {
+  return (
+    <section className="border-y border-border/60 bg-background">
+      <div className="mx-auto max-w-6xl px-5 py-16 sm:py-20">
+        <div className="mx-auto max-w-2xl text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-foreground">
+            <Users className="h-3.5 w-3.5" /> Join 50+ salon owners who freed their business
+          </span>
+          <div className="mt-3 flex items-center justify-center gap-0.5 text-[var(--rose)]" aria-label="5 out of 5 stars">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Star key={i} className="h-4 w-4 fill-current" />
+            ))}
+          </div>
+        </div>
+        <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
+          {TESTIMONIALS.map((t) => (
+            <figure key={t.name} className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-soft)]">
+              <Quote className="h-5 w-5 text-[var(--rose)]" aria-hidden="true" />
+              <blockquote className="mt-3 flex-1 text-pretty text-sm leading-relaxed text-foreground">
+                "{t.quote}"
+              </blockquote>
+              <figcaption className="mt-5 border-t border-border pt-4">
+                <div className="text-sm font-medium text-foreground">{t.name}</div>
+                <div className="text-xs text-muted-foreground">{t.role}</div>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function HowItWorks() {
+  const steps = [
+    {
+      n: "01",
+      t: "Choose your path",
+      d: "DIY ($797) — we send you the system + plain-English guide. Live in an afternoon. Done-For-You ($5,797) — we configure everything for you. Live in 5–10 days.",
+    },
+    {
+      n: "02",
+      t: "We (or you) deploy",
+      d: "Follow the runbook, or hand us your logo and a Stripe login and we'll handle the build, database, payments, and SMS workflows end to end.",
+    },
+    {
+      n: "03",
+      t: "Start booking clients",
+      d: "Import your client list, set services and staff, and accept bookings. Your first booking can land within hours — and every dollar lands in your Stripe.",
+    },
+  ];
+  return (
+    <section className="mx-auto max-w-6xl px-5 py-24">
+      <div className="max-w-2xl">
+        <span className="text-xs font-medium uppercase tracking-wider text-[var(--rose)]">How it works</span>
+        <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+          From Booksy to your own system in under two weeks.
+        </h2>
+      </div>
+      <ol className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
+        {steps.map((s) => (
+          <li key={s.n} className="rounded-2xl border border-border bg-card p-6">
+            <div className="font-mono text-xs font-semibold uppercase tracking-wider text-[var(--rose)]">Step {s.n}</div>
+            <h3 className="mt-3 text-lg font-semibold tracking-tight">{s.t}</h3>
+            <p className="mt-2 text-sm text-muted-foreground">{s.d}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
+}
+
+function FinalCTA() {
+  return (
+    <section className="border-y border-border/60 bg-card">
+      <div className="mx-auto max-w-3xl px-5 py-20 text-center">
+        <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+          The $797 question isn't <span className="text-muted-foreground">"Can I afford this?"</span>
+          <br />
+          It's <span className="text-[var(--rose)]">"How much longer can I afford Booksy?"</span>
+        </h2>
+        <div className="mx-auto mt-9 flex max-w-md flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:justify-center">
+          <a
+            href="#offer"
+            onClick={() => track("cta_click", { location: "final_buy", label: "Buy — $797" })}
+            className="group inline-flex items-center justify-center gap-2 rounded-full bg-[var(--ink)] pl-6 pr-5 py-3.5 text-sm font-medium text-[var(--background)] shadow-[var(--shadow-elegant)] transition hover:-translate-y-px"
+          >
+            Buy the Salon Independence Kit — $797
+            <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+          </a>
+          <CalLink location="final_call" variant="secondary">
+            Book a free 15-min call
+            <ArrowRight className="h-4 w-4" />
+          </CalLink>
+        </div>
+        <p className="mt-6 text-xs text-muted-foreground">
+          Price increases to $997 on {PRICE_LOCK_DATE} · 60-Day Salon Savings Guarantee · Cancel anytime, you own the code
+        </p>
+      </div>
+    </section>
+  );
+}
