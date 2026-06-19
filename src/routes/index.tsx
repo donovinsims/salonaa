@@ -435,54 +435,53 @@ function Pain() {
         <div className="max-w-2xl">
           <span className="text-xs font-medium uppercase tracking-wider text-[var(--rose)]">The math nobody runs</span>
           <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-            Booksy, Square, and your spreadsheet quietly cost a 10-chair salon $15,000+ a year.
+            What Booksy &amp; Square really cost you.
           </h2>
-          <p className="mt-5 text-pretty text-lg text-muted-foreground">
-            There are three taxes most salon owners never add up: the <span className="text-foreground">subscription tax</span>{" "}
-            (per-seat software fees), the <span className="text-foreground">processing tax</span> (marked-up card rates), and
-            the <span className="text-foreground">Excel tax</span> (hours every week reconciling payroll and tips by hand).
+        </div>
+
+        {/* Big stat box — bottom line first */}
+        <div className="mt-10 grid grid-cols-1 gap-6 rounded-2xl border border-border bg-background p-8 sm:grid-cols-3 sm:p-10">
+          <div>
+            <div className="text-xs uppercase tracking-wider text-muted-foreground">Booksy + Square (10-chair salon)</div>
+            <div className="mt-2 font-mono text-3xl font-semibold tracking-tight text-[var(--ink)] sm:text-4xl">≈ $19k<span className="text-base font-normal text-muted-foreground">/yr</span></div>
+          </div>
+          <div className="sm:border-x sm:border-border sm:px-6">
+            <div className="text-xs uppercase tracking-wider text-muted-foreground">Salon Suite license</div>
+            <div className="mt-2 font-mono text-3xl font-semibold tracking-tight text-[var(--ink)] sm:text-4xl">$797<span className="text-base font-normal text-muted-foreground"> · once</span></div>
+          </div>
+          <div>
+            <div className="text-xs uppercase tracking-wider text-[var(--rose)]">You keep — year one</div>
+            <div className="mt-2 font-mono text-3xl font-semibold tracking-tight text-[var(--rose)] sm:text-4xl">~$18k</div>
+          </div>
+        </div>
+
+        <details className="group mt-6 rounded-xl border border-border bg-background p-5">
+          <summary className="flex cursor-pointer items-center justify-between text-sm font-medium text-foreground">
+            <span>See the breakdown — the three taxes you're paying</span>
+            <span className="text-xs text-muted-foreground transition group-open:rotate-180">▾</span>
+          </summary>
+          <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
+            <li className="flex items-start gap-3">
+              <span className="mt-0.5 inline-flex shrink-0 rounded-md bg-[var(--blush)]/60 px-2 py-0.5 font-mono text-xs text-[var(--ink)]">~$2.5k/yr</span>
+              <span><span className="font-medium text-foreground">Subscription tax.</span> Booksy Biz Pro + per-staff seats for 10 stylists.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="mt-0.5 inline-flex shrink-0 rounded-md bg-[var(--blush)]/60 px-2 py-0.5 font-mono text-xs text-[var(--ink)]">~$13k/yr</span>
+              <span><span className="font-medium text-foreground">Processing tax.</span> Square 2.6% + $0.10 on $40k/month card volume.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="mt-0.5 inline-flex shrink-0 rounded-md bg-[var(--blush)]/60 px-2 py-0.5 font-mono text-xs text-[var(--ink)]">$3.9k–$7.8k/yr</span>
+              <span><span className="font-medium text-foreground">Excel tax.</span> 3–6 hrs/week reconciling tips, commission, and payroll at $25/hr.</span>
+            </li>
+          </ul>
+          <p className="mt-5 text-xs text-muted-foreground">
+            Sources: Booksy Biz Pro pricing on{" "}
+            <a href="https://booksy.com/biz/en-us/pricing" className="underline hover:text-foreground" target="_blank" rel="noopener noreferrer">booksy.com/biz/pricing</a>{" "}
+            and Square in-person rates at{" "}
+            <a href="https://squareup.com/us/en/pricing" className="underline hover:text-foreground" target="_blank" rel="noopener noreferrer">squareup.com/us/pricing</a>.
+            Assumes a 10-stylist salon with $40k/month in card volume; your numbers may vary.
           </p>
-        </div>
-
-        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
-          {[
-            {
-              k: "~$2,500/yr",
-              t: "Subscription tax",
-              d: "Booksy Biz Pro and Vagaro both charge a base fee plus per-staff seats. A 10-stylist salon typically lands at $200–$300/month — call it $2,400–$3,000/year in software alone.",
-            },
-            {
-              k: "~$13,000/yr",
-              t: "Processing tax",
-              d: "Square in-person is 2.6% + $0.10 per swipe. On $40k/month in card volume that's ~$1,090/month, or roughly $13,000/year — gone before rent. Higher volume, higher bill.",
-            },
-            {
-              k: "$2k–$5k/yr",
-              t: "Excel tax",
-              d: "Reconciling tips, commission, and payroll by hand for 10 employees eats 3–6 hours every week. At $25/hour that's $3,900–$7,800 of owner time you'll never bill back.",
-            },
-          ].map((p) => (
-            <div key={p.t} className="rounded-xl border border-border bg-background p-6">
-              <div className="font-mono text-2xl font-semibold tracking-tight text-[var(--ink)]">{p.k}</div>
-              <div className="mt-1 text-sm font-medium">{p.t}</div>
-              <p className="mt-3 text-pretty text-sm text-muted-foreground">{p.d}</p>
-            </div>
-          ))}
-        </div>
-
-        <p className="mt-10 max-w-2xl text-pretty text-base text-muted-foreground">
-          For a typical 10-chair, $40k/month salon, that's roughly{" "}
-          <span className="font-semibold text-foreground">$17,500–$21,000 per year</span> — every year, forever. A one-time
-          $797 license pays for itself in about <span className="font-semibold text-foreground">3–4 months</span> of
-          subscription + processing savings (sooner if your card volume is higher).
-        </p>
-        <p className="mt-3 max-w-2xl text-xs text-muted-foreground">
-          Sources / assumptions: Booksy Biz Pro pricing as listed on{" "}
-          <a href="https://booksy.com/biz/en-us/pricing" className="underline hover:text-foreground" target="_blank" rel="noopener noreferrer">booksy.com/biz/pricing</a>{" "}
-          and Square in-person rates at{" "}
-          <a href="https://squareup.com/us/en/pricing" className="underline hover:text-foreground" target="_blank" rel="noopener noreferrer">squareup.com/us/pricing</a>.
-          Estimates assume a 10-stylist salon with $40k/month in card volume; your numbers may vary.
-        </p>
+        </details>
       </div>
     </section>
   );
