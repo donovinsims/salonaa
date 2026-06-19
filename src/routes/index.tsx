@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Sparkles,
   DollarSign,
@@ -13,6 +13,14 @@ import {
   Activity,
   Wrench,
   AlertTriangle,
+  Star,
+  Quote,
+  Shield,
+  Mail,
+  MapPin,
+  Gift,
+  Clock,
+  Sparkle,
 } from "lucide-react";
 import {
   Accordion,
