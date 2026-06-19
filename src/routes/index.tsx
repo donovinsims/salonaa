@@ -563,32 +563,32 @@ function Features() {
     {
       icon: Activity,
       title: "Real-time floor board",
-      body: "See at a glance which stylist is with a client, who's available, and who's running late — from the front desk or your phone at lunch.",
+      body: "See who's free, busy, or running late — from the front desk or your phone.",
     },
     {
       icon: DollarSign,
       title: "Commission tracking that just adds up",
-      body: "Set each stylist's commission % and hourly rate once. Every booking writes a commission row automatically. Export to CSV on payday — no more spreadsheets eating your Sundays.",
+      body: "Sundays are for family, not spreadsheets. Set rates once. Export CSV at payday.",
     },
     {
       icon: Search,
       title: "Your salon on Google, not Booksy's profile",
-      body: "Built-in SEO means your salon shows up in local search — on your own domain. Reviews land on your Google profile, not the platform's.",
+      body: "Local SEO on your own domain. Reviews land on your Google profile, not Booksy's.",
     },
     {
       icon: CreditCard,
       title: "Payments straight to your bank",
-      body: "Online deposits and in-person card swipes go directly to your Stripe account. Standard processing rate — no marked-up 'platform fee' on top.",
+      body: "Online deposits and swipes go straight to your Stripe. No platform markup.",
     },
     {
       icon: Users,
       title: "Your client list, finally",
-      body: "Every customer who books is yours. Names, phone numbers, visit history, preferred stylist — exportable any time. You're not renting access from a marketplace.",
+      body: "Names, numbers, visit history — yours. Exportable any time. Not rented.",
     },
     {
       icon: Wrench,
       title: "No subscription. Ever.",
-      body: "Pay once, own it forever. No 'per stylist' fees, no 'per booking' cuts, no surprise price hike next year because someone raised a Series C.",
+      body: "Pay once. Own it forever. No per-staff fees. No surprise price hikes.",
     },
   ];
   return (
