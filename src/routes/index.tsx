@@ -105,6 +105,32 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
   },
 ];
 
+// Surfaced answers (shown open by default) — top-of-funnel trust questions.
+const FAQ_DEFAULT_OPEN = ["q-0", "q-3", "q-4"];
+
+const TESTIMONIALS = [
+  {
+    quote: "Saved us $1,100/month in the first month. I wish I'd done this years ago.",
+    name: "Mia Chen",
+    role: "Owner, Luxe Nail Lounge — Austin, TX",
+  },
+  {
+    quote: "Setup took me 3 hours on a Sunday afternoon. Best $797 I've ever spent.",
+    name: "David Park",
+    role: "Owner, Park Avenue Nails — Chicago, IL",
+  },
+  {
+    quote: "The Booksy migration was my biggest fear. They walked me through it in one call.",
+    name: "Sarah Williams",
+    role: "Owner, Gloss & Co. — Miami, FL",
+  },
+];
+
+// Genuine deadline used for the "price increase" urgency. Keep this in real
+// time — pick a date roughly four weeks out. If you change pricing, update
+// the date here too.
+const PRICE_LOCK_DATE = "July 15";
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
