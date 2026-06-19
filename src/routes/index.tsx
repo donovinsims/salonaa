@@ -620,7 +620,7 @@ function Disqualify() {
   return (
     <section id="fit" className="mx-auto max-w-6xl px-5 py-24">
       <div className="max-w-2xl">
-        <span className="text-xs font-medium uppercase tracking-wider text-[var(--rose)]">Honest part</span>
+        <span className="text-xs font-medium uppercase tracking-wider text-[var(--rose)]">Who it's for</span>
         <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
           This isn't for every salon.
         </h2>
