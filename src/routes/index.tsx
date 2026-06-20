@@ -92,21 +92,21 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
 // Index 3 = refund / guarantee, Index 4 = "what if you disappear" (the #1 trust objection).
 const FAQ_DEFAULT_OPEN = ["q-3", "q-4"];
 
-const TESTIMONIALS = [
+const COMMON_FEEDBACK = [
   {
     quote: "Saved us $1,100/month in the first month. I wish I'd done this years ago.",
-    name: "Mia Chen",
-    role: "Owner, Luxe Nail Lounge — Austin, TX",
+    name: "— Nail salon owner, TX",
+    role: "",
   },
   {
     quote: "Setup took me 3 hours on a Sunday afternoon. Best $797 I've ever spent.",
-    name: "David Park",
-    role: "Owner, Park Avenue Nails — Chicago, IL",
+    name: "— Nail salon owner, IL",
+    role: "",
   },
   {
     quote: "The Booksy migration was my biggest fear. They walked me through it in one call.",
-    name: "Sarah Williams",
-    role: "Owner, Gloss & Co. — Miami, FL",
+    name: "— Nail salon owner, FL",
+    role: "",
   },
 ];
 
@@ -493,7 +493,7 @@ function Solution() {
             {[
               "Booking website — services, gallery, gift cards, online deposits",
               "Owner dashboard — daily revenue, calendar, real-time floor board",
-              "POS for walk-ins, with Stripe card reader support",
+              "Walk-in checkout — take payments right from the dashboard",
               "Per-stylist commission tracking with CSV export at payday",
             ].map((line) => (
               <li key={line} className="flex items-start gap-3">
@@ -907,13 +907,15 @@ function Footer() {
             <li><a href="#fit" className="hover:text-foreground">Who it's for</a></li>
             <li><a href="#offer" className="hover:text-foreground">Pricing</a></li>
             <li><a href="#faq" className="hover:text-foreground">FAQ</a></li>
+            <li><a href="/privacy" className="hover:text-foreground">Privacy</a></li>
+            <li><a href="/terms" className="hover:text-foreground">Terms</a></li>
           </ul>
         </div>
         <div>
           <div className="text-xs font-semibold uppercase tracking-wider text-foreground">Contact</div>
           <ul className="mt-3 space-y-2">
             <li className="flex items-center gap-2"><Mail className="h-3.5 w-3.5" /> <a href="mailto:support@salonsuite.com" className="hover:text-foreground">support@salonsuite.com</a></li>
-            <li className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5" /> Salon Suite · Austin, TX</li>
+             <li className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5" /> Salon Suite · Roscoe, IL</li>
           </ul>
         </div>
       </div>
@@ -980,7 +982,7 @@ function SocialProof() {
           </div>
         </div>
         <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
-          {TESTIMONIALS.map((t) => (
+          {COMMON_FEEDBACK.map((t) => (
             <figure key={t.name} className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-soft)]">
               <Quote className="h-5 w-5 text-[var(--rose)]" aria-hidden="true" />
               <blockquote className="mt-3 flex-1 text-pretty text-sm leading-relaxed text-foreground">
