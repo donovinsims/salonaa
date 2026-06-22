@@ -1,0 +1,10 @@
+# Salon Suite — The Salon Independence Kit
+> White-label nail-salon booking/POS codebase sold as a one-time license.
+
+## Key docs
+- Privacy Policy: /privacy
+- Terms of Service: /terms
+- Features: /features
+- Guarantee: /guarantee
+- Compare vs Booksy: /compare/booksy
+- Compare vs Vagaro: /compare/vagaro

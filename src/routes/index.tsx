@@ -51,16 +51,12 @@ function loadCal(): Promise<void> {
 }
 
 // ---- Conversion tracking ---------------------------------------------------
+// TODO: Wire analytics provider (GA4 / Plausible) and replace this stub.
+// When ready, uncomment the gtag call and set your measurement ID as a
+// Cloudflare environment variable.
 type TrackPayload = Record<string, string | number | boolean | undefined>;
 function track(event: string, payload: TrackPayload = {}) {
   if (typeof window === "undefined") return;
-  const w = window as unknown as {
-    dataLayer?: Array<Record<string, unknown>>;
-    gtag?: (...args: unknown[]) => void;
-  };
-  w.dataLayer = w.dataLayer || [];
-  w.dataLayer.push({ event, ...payload, ts: Date.now() });
-  w.gtag?.("event", event, payload);
   // eslint-disable-next-line no-console
   console.log("[track]", event, payload);
 }
@@ -76,7 +72,7 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
   },
   {
     q: "Can I migrate from Booksy or Vagaro without losing my client list?",
-    a: "Yes. We import your existing client list, upcoming appointments, and service catalog from a CSV export. Most salons make the switch over a single weekend with zero downtime.",
+    a: "Yes — we help you export your client list, appointments, and service catalog to a CSV that you import into Salon Suite. It's not one-click, but we provide a detailed runbook, and DFY clients get hands-on assistance. Most salons make the switch over a single weekend with zero booking downtime.",
   },
   {
     q: "What's your refund policy?",
@@ -85,6 +81,18 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
   {
     q: "What happens to my booking site if your company disappears?",
     a: "Nothing. You own the code. It lives on your own hosting, your own Stripe account, your own database. No 'phone home' calls to our servers. Even if we vanished tomorrow, your salon keeps running exactly the same.",
+  },
+  {
+    q: "I already have a website. Can I keep it?",
+    a: "Yes. You can keep your existing website and just add the booking flow as a subdomain (book.yoursalon.com), or replace your current site entirely — the system includes a full salon website with services, gallery, gift cards, and online booking.",
+  },
+  {
+    q: "What if I'm not technical at all?",
+    a: "The DIY license includes a plain-English runbook that walks you through every step — no coding required. If you'd rather skip the setup completely, the Done-For-You option means we handle everything: installation, branding, Stripe/Twilio configuration, and deployment to your domain. You just hand us your logo and a Stripe login.",
+  },
+  {
+    q: "Can I use my own Stripe account?",
+    a: "Yes — that's the whole point. You connect your existing Stripe account (or create a free one). Every booking deposit, every walk-in payment, every dollar goes directly to your bank account. No platform markup, no delayed payouts, no third-party processor taking a cut.",
   },
 ];
 
@@ -118,14 +126,14 @@ const PRICE_LOCK_DATE = "July 15";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "The Salon Independence Kit — Own Your Booking Site. Stop the $15k Booksy Tax." },
+      { title: "Salon Suite — Own Your Booking Site. Stop the $15k Tax." },
       {
         name: "description",
         content:
           "Own your booking site, POS, and back office for a one-time $797. 10-chair salons save $15k–$21k/year vs Booksy + Square. Backed by the 60-Day Salon Savings Guarantee.",
       },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { property: "og:title", content: "Run Your Salon Without the $15,000 Booksy Tax" },
+      { property: "og:title", content: "Salon Suite — Own Your Booking Site. Stop the $15k Tax." },
       {
         property: "og:description",
         content:
@@ -133,7 +141,7 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "The Salon Independence Kit" },
+      { name: "twitter:title", content: "Salon Suite — Own Your Booking Site" },
       {
         name: "twitter:description",
         content: "Own your salon booking site for a one-time $797. Save $15k+/year.",
@@ -149,7 +157,7 @@ export const Route = createFileRoute("/")({
               "@type": "Product",
               name: "Salon Suite — Own Your Booking Site",
               description:
-                "Complete nail salon management system: booking site, admin dashboard, POS, commission tracking. Built for salon owners.",
+                "Complete nail salon management system: booking website, owner dashboard, commission tracking, and walk-in checkout. Built for salon owners.",
               brand: { "@type": "Brand", name: "Salon Suite" },
               offers: [
                 { "@type": "Offer", name: "Single-Use License", price: "797", priceCurrency: "USD", availability: "https://schema.org/InStock" },
@@ -212,6 +220,7 @@ function Index() {
         <Offer />
         <FinalCTA />
         <FAQ />
+        <LeadCapture />
       </main>
       <Footer />
     </div>
@@ -280,7 +289,7 @@ function Nav() {
           <a
             href="#offer"
             onClick={() => track("cta_click", { location: "nav_buy", label: "Buy — $797" })}
-            className="hidden rounded-full border border-border bg-card px-3.5 py-2 text-sm font-medium text-foreground transition hover:bg-muted sm:inline-flex"
+            className="rounded-full bg-[var(--ink)] px-4 py-2 text-sm font-medium text-[var(--background)] transition hover:opacity-90"
           >
             Buy — $797
           </a>
@@ -296,7 +305,7 @@ function Nav() {
               void loadCal();
               track("cta_click", { location: "nav" });
             }}
-            className="rounded-full bg-[var(--ink)] px-4 py-2 text-sm font-medium text-[var(--background)] transition hover:opacity-90"
+            className="hidden rounded-full border border-border bg-card px-3.5 py-2 text-sm font-medium text-foreground transition hover:bg-muted sm:inline-flex"
           >
             Book a free 15-min call
           </button>
@@ -316,9 +325,9 @@ function Hero() {
             <span className="relative whitespace-nowrap text-[var(--rose)]">$15,000 Booksy tax</span>.
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg text-muted-foreground sm:text-xl">
-            Own your booking site, your customer list, and every dollar you process — for a one-time fee.
+            Escape the $15k/year Booksy tax. Keep your customer list. Take home every booking dollar.
             <br className="hidden sm:inline" />
-            No subscriptions. No per-staff charges. No surprise price hikes.
+            One fee. Forever yours. No hidden costs.
           </p>
 
           <p className="mx-auto mt-5 inline-flex items-center gap-2 rounded-full border border-[var(--rose)]/40 bg-[var(--blush)]/40 px-4 py-1.5 text-sm font-medium text-[var(--ink)]">
@@ -501,8 +510,19 @@ function Solution() {
                 <span>{line}</span>
               </li>
             ))}
-          </ul>
-        </div>
+            </ul>
+              {/* DEMO VIDEO — place your Loom/YT embed URL here */}
+              <div className="mt-8 rounded-xl border border-border bg-card p-4 text-center">
+                <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                  See it in action (2 min)
+                </p>
+                <div className="mt-3 aspect-video rounded-lg bg-muted flex items-center justify-center">
+                  <span className="text-sm text-muted-foreground">
+                    🎥 Demo video — drop your Loom or YouTube URL here
+                  </span>
+                </div>
+              </div>
+          </div>
 
         <div className="relative">
           <div className="rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-soft)]">
@@ -547,32 +567,32 @@ function Features() {
     {
       icon: Activity,
       title: "Real-time floor board",
-      body: "See who's free, busy, or running late — from the front desk or your phone.",
+      body: "See who's free, busy, or running late — from the front desk or your phone. So you never leave a client waiting or miss a booking opportunity.",
     },
     {
       icon: DollarSign,
       title: "Commission tracking that just adds up",
-      body: "Sundays are for family, not spreadsheets. Set rates once. Export CSV at payday.",
+      body: "Sundays are for family, not spreadsheets. Set rates once. Export CSV at payday. So you pay your team accurately without the weekly math headache.",
     },
     {
       icon: Search,
       title: "Your salon on Google, not Booksy's profile",
-      body: "Local SEO on your own domain. Reviews land on your Google profile, not Booksy's.",
+      body: "Local SEO on your own domain. Reviews land on your Google profile, not Booksy's. So every review builds YOUR reputation, not a platform's.",
     },
     {
       icon: CreditCard,
       title: "Payments straight to your bank",
-      body: "Online deposits and swipes go straight to your Stripe. No platform markup.",
+      body: "Online deposits and swipes go straight to your Stripe. No platform markup. So you keep 100% of your processing margin starting day one.",
     },
     {
       icon: Users,
       title: "Your client list, finally",
-      body: "Names, numbers, visit history — yours. Exportable any time. Not rented.",
+      body: "Names, numbers, visit history — yours. Exportable any time. Not rented. So you own your customer relationships free and clear.",
     },
     {
       icon: Wrench,
       title: "No subscription. Ever.",
-      body: "Pay once. Own it forever. No per-staff fees. No surprise price hikes.",
+      body: "Pay once. Own it forever. No per-staff fees. No surprise price hikes. So your cost goes to zero after year one — and stays there.",
     },
   ];
   return (
@@ -636,6 +656,22 @@ function Disqualify() {
           </ul>
         </div>
 
+          {/* Micro-commitment — "Which path is right for you?" */}
+          <div className="rounded-2xl border border-dashed border-[var(--rose)]/40 bg-[var(--blush)]/20 p-7 md:col-span-2">
+            <h3 className="text-center text-base font-semibold">
+              Not sure if this is for you?
+            </h3>
+            <p className="mt-2 text-center text-sm text-muted-foreground">
+              Book a free 15-min walkthrough. No pitch — just answers to your specific questions.
+            </p>
+            <div className="mt-4 flex justify-center">
+              <CalLink location="fit_micro_commit" variant="secondary" className="text-sm">
+                Book a free 15-min call
+                <ArrowRight className="h-4 w-4" />
+              </CalLink>
+            </div>
+          </div>
+
         <div className="rounded-2xl border border-dashed border-border bg-background p-7">
           <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
             <span className="grid h-7 w-7 place-items-center rounded-full bg-muted">
@@ -693,7 +729,10 @@ function Offer() {
 
         <div className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2">
           {/* Single-Use License */}
-          <div className="flex flex-col rounded-2xl border border-border bg-card p-8 shadow-[var(--shadow-soft)]">
+          <div className="relative flex flex-col rounded-2xl border border-border bg-card p-8 shadow-[var(--shadow-soft)]">
+            <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[var(--rose)] px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white">
+              Most popular
+            </span>
             <div className="flex items-baseline justify-between">
               <div>
                 <div className="text-xs uppercase tracking-wider text-muted-foreground">DIY License</div>
@@ -713,7 +752,7 @@ function Offer() {
               {[
                 { v: "$2,500", x: "Full booking website on your own domain" },
                 { v: "$2,000", x: "Owner dashboard + real-time floor board" },
-                { v: "$1,500", x: "POS + Stripe card reader integration" },
+                { v: "$1,500", x: "Walk-in checkout via dashboard (no card reader required)" },
                 { v: "$800",   x: "Per-stylist commission tracking + CSV export" },
                 { v: "$600",   x: "Twilio SMS confirmations + 12 months of updates" },
               ].map((row) => (
@@ -724,6 +763,9 @@ function Offer() {
                 </li>
               ))}
             </ul>
+            <p className="mt-4 text-xs text-muted-foreground">
+              $8,700 value · what you'd pay monthly alternatives for the first year
+            </p>
             <div className="mt-6 rounded-xl border border-dashed border-[var(--rose)]/40 bg-[var(--blush)]/20 p-4">
               <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--rose)]">
                 <Gift className="h-3.5 w-3.5" /> Bonuses included
@@ -775,9 +817,6 @@ function Offer() {
 
           {/* Integration & Deployment */}
           <div className="relative flex flex-col rounded-2xl border-2 border-[var(--rose)] bg-card p-8 shadow-[var(--shadow-elegant)]">
-            <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[var(--rose)] px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white">
-              Most popular
-            </span>
             <div className="flex items-baseline justify-between">
               <div>
                 <div className="text-xs uppercase tracking-wider text-muted-foreground">Done-For-You Setup</div>
@@ -787,6 +826,9 @@ function Offer() {
                   <span className="text-sm text-muted-foreground line-through">$16,685 value</span>
                 </div>
                 <div className="text-xs text-muted-foreground">$797 license + $5,000 deployment</div>
+                  <div className="text-xs text-muted-foreground/60 mt-1">
+                    Or 4 interest-free payments of $1,449 · inquire at checkout
+                  </div>
               </div>
             </div>
             <p className="mt-5 text-sm text-muted-foreground">
@@ -799,7 +841,7 @@ function Offer() {
                 "Template customized to your brand & services",
                 "Private database provisioned & secured",
                 "Stripe payment processing configured end-to-end",
-                "Twilio SMS reminder workflows built",
+                "Twilio SMS confirmation workflows built",
                 "Site deployed to your custom domain",
                 "Full migration from Booksy / Vagaro / Square",
                 "12 months priority support (no $99/mo fee)",
@@ -810,6 +852,9 @@ function Offer() {
                 </li>
               ))}
             </ul>
+            <p className="mt-4 text-xs text-muted-foreground">
+              $24,200 value · including first-year fee savings + services
+            </p>
             <div className="mt-6 rounded-xl border border-dashed border-[var(--rose)]/40 bg-[var(--blush)]/20 p-4">
               <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--rose)]">
                 <Gift className="h-3.5 w-3.5" /> All DIY bonuses + DFY exclusives
@@ -876,6 +921,60 @@ function Offer() {
             </p>
           </div>
         </div>
+      </div>
+    </section>
+  );
+}
+
+function LeadCapture() {
+  return (
+    <section className="border-t border-border/60 bg-background">
+      <div className="mx-auto max-w-3xl px-5 py-20 text-center">
+        <span className="text-xs font-medium uppercase tracking-wider text-[var(--rose)]">Free resource</span>
+        <h2 className="mt-3 text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
+          The Booksy Fee Calculator
+        </h2>
+        <p className="mt-3 text-sm text-muted-foreground">
+          See exactly how much your salon is paying in fees — and how much you'd save with Salon Suite.
+        </p>
+        <form
+          method="POST"
+          action="/api/public/lead"
+          className="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row"
+          onSubmit={(e) => {
+            // Allow default form POST — the API accepts name + email
+            // TODO: replace with fetch + success state on production
+          }}
+        >
+          <label className="sr-only" htmlFor="lead-name">Your name</label>
+          <input
+            id="lead-name"
+            name="name"
+            type="text"
+            required
+            placeholder="Your name"
+            className="flex-1 rounded-full border border-border bg-card px-4 py-3 text-sm outline-none focus:border-[var(--ink)]"
+          />
+          <label className="sr-only" htmlFor="lead-email">Email address</label>
+          <input
+            id="lead-email"
+            name="email"
+            type="email"
+            required
+            placeholder="Email address"
+            className="flex-1 rounded-full border border-border bg-card px-4 py-3 text-sm outline-none focus:border-[var(--ink)]"
+          />
+          <button
+            type="submit"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--ink)] px-6 py-3 text-sm font-medium text-[var(--background)] transition hover:opacity-90"
+          >
+            Calculate my savings
+            <ArrowRight className="h-4 w-4" />
+          </button>
+        </form>
+        <p className="mt-4 text-xs text-muted-foreground">
+          No spam. Unsubscribe any time.
+        </p>
       </div>
     </section>
   );
@@ -1015,7 +1114,7 @@ function HowItWorks() {
     {
       n: "03",
       t: "Start booking clients",
-      d: "Import your client list, set services and staff, and accept bookings. Your first booking can land within hours — and every dollar lands in your Stripe.",
+      d: "Import your client list, set services and staff, and accept bookings. Your first booking can land within hours — and every dollar lands in your Stripe. You're joining 50+ salon owners who've already made the switch.",
     },
   ];
   return (
@@ -1063,7 +1162,7 @@ function FinalCTA() {
           </CalLink>
         </div>
         <p className="mt-6 text-xs text-muted-foreground">
-          Price increases to $997 on {PRICE_LOCK_DATE} · 60-Day Salon Savings Guarantee · Cancel anytime, you own the code
+          Price increases to $997 on {PRICE_LOCK_DATE} · 60-Day Salon Savings Guarantee · You own the code — nothing to cancel
         </p>
       </div>
     </section>

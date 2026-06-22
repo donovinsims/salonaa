@@ -1,0 +1,53 @@
+{
+  "feature": "Salon Suite marketing site fixes — honesty/legal, conversion, copy, SEO, security",
+  "status": "completed",
+  "stack": "tanstack-start",
+  "api_style": "rest",
+  "complexity": "medium",
+  "current_step": 9,
+  "current_phase": 3,
+  "completed_steps": [
+    "Requirements gathering",
+    "Codebase exploration",
+    "Section A: Honesty/Legal fixes",
+    "Section F: SEO fixes",
+    "Section G: Technical/Security fixes",
+    "Section B: Conversion fixes (auto)",
+    "Sections C/D/E: Copy/Offer/Persuasion fixes",
+    "Build + typecheck verification"
+  ],
+  "files_created": [
+    ".full-stack-feature/01-requirements.md",
+    "src/routes/sitemap.xml.ts",
+    "src/routes/robots.txt.ts",
+    "src/routes/features.tsx",
+    "src/routes/compare/booksy.tsx",
+    "src/routes/compare/vagaro.tsx",
+    "src/routes/guarantee.tsx",
+    "src/routes/locations/$city.tsx",
+    "public/llms.txt",
+    "public/og-image.png",
+    "README.md"
+  ],
+  "files_modified": [
+    "src/routes/index.tsx",
+    "src/routes/privacy.tsx",
+    "src/routes/terms.tsx",
+    "src/routes/__root.tsx",
+    "src/routes/api/public/lead.ts",
+    "vercel.json"
+  ],
+  "still_needs_user_input": [
+    "Polar checkout links (DIY $797, DFY $5,797)",
+    "Lead destination + RESEND_API_KEY",
+    "Production domain",
+    "OG image (1200×630, replace placeholder)",
+    "Founder block info",
+    "Testimonials decision",
+    "Scarcity/urgency truth (DFY spots, price-lock date)",
+    "Analytics choice",
+    "Google Search Console token (optional)"
+  ],
+  "started_at": "2026-06-21T00:00:00.000Z",
+  "completed_at": "2026-06-22T00:00:00.000Z"
+}

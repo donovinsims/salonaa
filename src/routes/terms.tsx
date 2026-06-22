@@ -26,7 +26,7 @@ function TermsPage() {
         <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
           Terms of Service
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground">Last updated: June 2025</p>
+        <p className="mt-2 text-sm text-muted-foreground">Last updated: June 2026</p>
 
         <div className="mt-10 space-y-6 text-sm leading-relaxed text-muted-foreground">
           <section>

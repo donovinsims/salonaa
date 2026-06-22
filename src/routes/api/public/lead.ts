@@ -1,18 +1,52 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
+// TODO: Replace with actual production domain
+const ALLOWED_ORIGIN = "https://example.com";
+
 const LeadSchema = z.object({
   name: z.string().trim().min(1).max(120),
   email: z.string().trim().email().max(255),
   salonUrl: z.string().trim().max(255).optional().default(""),
   startDate: z.string().trim().max(40).optional().default(""),
   source: z.string().trim().max(80).optional().default("landing"),
+  // Honeypot: hidden field bots fill in — must be empty for real submissions
+  website: z.string().max(0).optional().default(""),
 });
+
+// Simple in-memory rate limit: max 5 requests per IP per minute
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW = 60_000; // 1 minute
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW });
+    return true;
+  }
+  if (entry.count >= RATE_LIMIT_MAX) return false;
+  entry.count++;
+  return true;
+}
 
 export const Route = createFileRoute("/api/public/lead")({
   server: {
     handlers: {
       POST: async ({ request }) => {
+        // CORS check
+        const origin = request.headers.get("origin") ?? "";
+        if (origin && origin !== ALLOWED_ORIGIN) {
+          return Response.json({ ok: false, error: "forbidden" }, { status: 403 });
+        }
+
+        // Rate limit by IP
+        const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+        if (!checkRateLimit(ip)) {
+          return Response.json({ ok: false, error: "too_many_requests" }, { status: 429 });
+        }
+
         let json: unknown;
         try {
           json = await request.json();
@@ -26,27 +60,60 @@ export const Route = createFileRoute("/api/public/lead")({
             { status: 400 },
           );
         }
-        // Lead lands here. Visible in server logs immediately. Wire an email
-        // provider (Resend, Brevo, Lovable Emails) in this handler to deliver
-        // straight to inbox.
+
+        // Honeypot check
+        if (parsed.data.website) {
+          // Bot filled the honeypot — silently accept to not tip off bots
+          return Response.json({ ok: true });
+        }
+
         const lead = {
           ...parsed.data,
           receivedAt: new Date().toISOString(),
           ua: request.headers.get("user-agent") ?? "",
         };
+
+        // Log with redacted email for debugging (full email still available
+        // via structured logging / downstream delivery)
+        const redacted = {
+          ...lead,
+          email: lead.email.replace(/(?<=^.{3}).*(?=@)/, "***"),
+        };
         // eslint-disable-next-line no-console
-        console.log("[LEAD]", JSON.stringify(lead));
-        return Response.json({ ok: true });
+        console.log("[LEAD]", JSON.stringify(redacted));
+
+        // TODO: Wire lead delivery — e.g., send via Resend to your email
+        // or CRM webhook. Requires RESEND_API_KEY as a Cloudflare secret.
+        // Example:
+        // const { Resend } = await import("resend");
+        // const resend = new Resend(process.env.RESEND_API_KEY);
+        // await resend.emails.send({ ... });
+
+        return Response.json(
+          { ok: true },
+          {
+            headers: {
+              "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
+              "Access-Control-Allow-Methods": "POST, OPTIONS",
+              "Access-Control-Allow-Headers": "Content-Type",
+              "Access-Control-Max-Age": "86400",
+            },
+          },
+        );
       },
-      OPTIONS: async () =>
-        new Response(null, {
+      OPTIONS: async ({ request }) => {
+        const origin = request.headers.get("origin") ?? "";
+        const corsOrigin = origin === ALLOWED_ORIGIN ? ALLOWED_ORIGIN : "null";
+        return new Response(null, {
           status: 204,
           headers: {
-            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Origin": corsOrigin,
             "Access-Control-Allow-Methods": "POST, OPTIONS",
             "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Max-Age": "86400",
           },
-        }),
+        });
+      },
     },
   },
 });

@@ -11,7 +11,14 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as GuaranteeRouteImport } from './routes/guarantee'
+import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SitemapXmlRouteImport } from './routes/sitemap.xml'
+import { Route as RobotsTxtRouteImport } from './routes/robots.txt'
+import { Route as LocationsCityRouteImport } from './routes/locations/$city'
+import { Route as CompareVagaroRouteImport } from './routes/compare/vagaro'
+import { Route as CompareBooksyRouteImport } from './routes/compare/booksy'
 import { Route as ApiPublicLeadRouteImport } from './routes/api/public/lead'
 
 const TermsRoute = TermsRouteImport.update({
@@ -24,9 +31,44 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuaranteeRoute = GuaranteeRouteImport.update({
+  id: '/guarantee',
+  path: '/guarantee',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeaturesRoute = FeaturesRouteImport.update({
+  id: '/features',
+  path: '/features',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapXmlRoute = SitemapXmlRouteImport.update({
+  id: '/sitemap/xml',
+  path: '/sitemap/xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RobotsTxtRoute = RobotsTxtRouteImport.update({
+  id: '/robots/txt',
+  path: '/robots/txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LocationsCityRoute = LocationsCityRouteImport.update({
+  id: '/locations/$city',
+  path: '/locations/$city',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompareVagaroRoute = CompareVagaroRouteImport.update({
+  id: '/compare/vagaro',
+  path: '/compare/vagaro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompareBooksyRoute = CompareBooksyRouteImport.update({
+  id: '/compare/booksy',
+  path: '/compare/booksy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicLeadRoute = ApiPublicLeadRouteImport.update({
@@ -37,35 +79,97 @@ const ApiPublicLeadRoute = ApiPublicLeadRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/features': typeof FeaturesRoute
+  '/guarantee': typeof GuaranteeRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
+  '/compare/booksy': typeof CompareBooksyRoute
+  '/compare/vagaro': typeof CompareVagaroRoute
+  '/locations/$city': typeof LocationsCityRoute
+  '/robots/txt': typeof RobotsTxtRoute
+  '/sitemap/xml': typeof SitemapXmlRoute
   '/api/public/lead': typeof ApiPublicLeadRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/features': typeof FeaturesRoute
+  '/guarantee': typeof GuaranteeRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
+  '/compare/booksy': typeof CompareBooksyRoute
+  '/compare/vagaro': typeof CompareVagaroRoute
+  '/locations/$city': typeof LocationsCityRoute
+  '/robots/txt': typeof RobotsTxtRoute
+  '/sitemap/xml': typeof SitemapXmlRoute
   '/api/public/lead': typeof ApiPublicLeadRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/features': typeof FeaturesRoute
+  '/guarantee': typeof GuaranteeRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
+  '/compare/booksy': typeof CompareBooksyRoute
+  '/compare/vagaro': typeof CompareVagaroRoute
+  '/locations/$city': typeof LocationsCityRoute
+  '/robots/txt': typeof RobotsTxtRoute
+  '/sitemap/xml': typeof SitemapXmlRoute
   '/api/public/lead': typeof ApiPublicLeadRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/privacy' | '/terms' | '/api/public/lead'
+  fullPaths:
+    | '/'
+    | '/features'
+    | '/guarantee'
+    | '/privacy'
+    | '/terms'
+    | '/compare/booksy'
+    | '/compare/vagaro'
+    | '/locations/$city'
+    | '/robots/txt'
+    | '/sitemap/xml'
+    | '/api/public/lead'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/privacy' | '/terms' | '/api/public/lead'
-  id: '__root__' | '/' | '/privacy' | '/terms' | '/api/public/lead'
+  to:
+    | '/'
+    | '/features'
+    | '/guarantee'
+    | '/privacy'
+    | '/terms'
+    | '/compare/booksy'
+    | '/compare/vagaro'
+    | '/locations/$city'
+    | '/robots/txt'
+    | '/sitemap/xml'
+    | '/api/public/lead'
+  id:
+    | '__root__'
+    | '/'
+    | '/features'
+    | '/guarantee'
+    | '/privacy'
+    | '/terms'
+    | '/compare/booksy'
+    | '/compare/vagaro'
+    | '/locations/$city'
+    | '/robots/txt'
+    | '/sitemap/xml'
+    | '/api/public/lead'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FeaturesRoute: typeof FeaturesRoute
+  GuaranteeRoute: typeof GuaranteeRoute
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
+  CompareBooksyRoute: typeof CompareBooksyRoute
+  CompareVagaroRoute: typeof CompareVagaroRoute
+  LocationsCityRoute: typeof LocationsCityRoute
+  RobotsTxtRoute: typeof RobotsTxtRoute
+  SitemapXmlRoute: typeof SitemapXmlRoute
   ApiPublicLeadRoute: typeof ApiPublicLeadRoute
 }
 
@@ -85,11 +189,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guarantee': {
+      id: '/guarantee'
+      path: '/guarantee'
+      fullPath: '/guarantee'
+      preLoaderRoute: typeof GuaranteeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/features': {
+      id: '/features'
+      path: '/features'
+      fullPath: '/features'
+      preLoaderRoute: typeof FeaturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap/xml': {
+      id: '/sitemap/xml'
+      path: '/sitemap/xml'
+      fullPath: '/sitemap/xml'
+      preLoaderRoute: typeof SitemapXmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robots/txt': {
+      id: '/robots/txt'
+      path: '/robots/txt'
+      fullPath: '/robots/txt'
+      preLoaderRoute: typeof RobotsTxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/locations/$city': {
+      id: '/locations/$city'
+      path: '/locations/$city'
+      fullPath: '/locations/$city'
+      preLoaderRoute: typeof LocationsCityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compare/vagaro': {
+      id: '/compare/vagaro'
+      path: '/compare/vagaro'
+      fullPath: '/compare/vagaro'
+      preLoaderRoute: typeof CompareVagaroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compare/booksy': {
+      id: '/compare/booksy'
+      path: '/compare/booksy'
+      fullPath: '/compare/booksy'
+      preLoaderRoute: typeof CompareBooksyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/lead': {
@@ -104,10 +257,27 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FeaturesRoute: FeaturesRoute,
+  GuaranteeRoute: GuaranteeRoute,
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,
+  CompareBooksyRoute: CompareBooksyRoute,
+  CompareVagaroRoute: CompareVagaroRoute,
+  LocationsCityRoute: LocationsCityRoute,
+  RobotsTxtRoute: RobotsTxtRoute,
+  SitemapXmlRoute: SitemapXmlRoute,
   ApiPublicLeadRoute: ApiPublicLeadRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

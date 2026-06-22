@@ -26,7 +26,7 @@ function PrivacyPage() {
         <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
           Privacy Policy
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground">Last updated: June 2025</p>
+        <p className="mt-2 text-sm text-muted-foreground">Last updated: June 2026</p>
 
         <div className="mt-10 space-y-6 text-sm leading-relaxed text-muted-foreground">
           <section>
@@ -52,8 +52,8 @@ function PrivacyPage() {
             <h2 className="mb-2 text-base font-semibold text-foreground">3. Data sharing</h2>
             <p>
               We do not sell your personal information. We share data only with service providers
-              who help us operate (Stripe for payments, Vercel for hosting, Twilio if you opt into
-              SMS features) — and they are bound by data processing agreements.
+              who help us operate (Stripe for payments, Cloudflare for hosting, Twilio if you opt into
+              messaging features) — and they are bound by data processing agreements.
             </p>
           </section>
 
@@ -61,8 +61,8 @@ function PrivacyPage() {
             <h2 className="mb-2 text-base font-semibold text-foreground">4. Your salon's data</h2>
             <p>
               When you deploy the Salon Suite codebase, client and booking data lives in your own
-              database, on your own cloud infrastructure. We do not have access to your end客户的
-              (your clients') data unless you explicitly grant it for support.
+              database, on your own cloud infrastructure. We do not have access to the data stored
+              in your deployment unless you explicitly grant it for support.
             </p>
           </section>
 

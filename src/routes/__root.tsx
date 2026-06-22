@@ -7,10 +7,12 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
+
+// TODO: Replace with actual production domain
+const SITE_URL = "https://example.com";
 
 function NotFoundComponent() {
   return (
@@ -37,9 +39,6 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
-  useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -77,22 +76,53 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "The Salon Independence Kit — Own Your Booking Site. Stop the $15k Booksy Tax." },
+      { title: "Salon Suite — Own Your Booking Site. Stop the $15k Tax." },
       { name: "description", content: "Own your salon's booking site, customer list, and Stripe payments — for a one-time $797 fee. 10-chair salons keep $15k–$21k/year. 60-Day Salon Savings Guarantee." },
       { name: "author", content: "Salon Suite" },
-      { property: "og:title", content: "The Salon Independence Kit — Stop Paying the $15k Booksy Tax" },
-      { property: "og:description", content: "Own your booking site, POS, and back office for a one-time $797. 60-Day Salon Savings Guarantee." },
+      // TODO: Replace with actual Google Search Console verification token
+      { name: "google-site-verification", content: "YOUR_VERIFICATION_TOKEN" },
+      { property: "og:title", content: "Salon Suite — Stop Paying the $15k Booksy Tax" },
+      { property: "og:description", content: "Own your booking site and back office for a one-time $797. 60-Day Salon Savings Guarantee." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:title", content: "The Salon Independence Kit" },
+      { name: "twitter:title", content: "Salon Suite" },
       { name: "twitter:description", content: "Own your salon booking site for a one-time $797. Save $15k+/year vs Booksy + Square." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/2bbf3511-bc6a-4179-a0c6-1f0cd69da6dd/id-preview-a6ce8f99--0690fe8e-1099-4945-bc1c-5c53868955fc.lovable.app-1781880862941.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/2bbf3511-bc6a-4179-a0c6-1f0cd69da6dd/id-preview-a6ce8f99--0690fe8e-1099-4945-bc1c-5c53868955fc.lovable.app-1781880862941.png" },
+      // TODO: Replace with user's OG image at /og-image.png (1200×630 PNG)
+      { property: "og:image", content: "/og-image.png" },
+      { name: "twitter:image", content: "/og-image.png" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
+      },
+      { rel: "canonical", href: SITE_URL },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              name: "Salon Suite",
+              url: SITE_URL,
+              description: "The Salon Independence Kit — white-label nail-salon booking/POS codebase sold as a one-time license.",
+              contactPoint: {
+                "@type": "ContactPoint",
+                email: "support@salonsuite.com",
+                contactType: "customer support",
+              },
+            },
+            {
+              "@type": "LocalBusiness",
+              name: "Salon Suite",
+              url: SITE_URL,
+              areaServed: "US",
+              availableLanguage: "en",
+            },
+          ],
+        }),
       },
     ],
   }),
