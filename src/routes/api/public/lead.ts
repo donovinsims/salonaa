@@ -82,20 +82,34 @@ export const Route = createFileRoute("/api/public/lead")({
         // eslint-disable-next-line no-console
         console.log("[LEAD]", JSON.stringify(redacted));
 
-        // Notify via Resend
-        const { Resend } = await import("resend");
-        const resend = new Resend(process.env.RESEND_API_KEY);
-        const { error: sendError } = await resend.emails.send({
-          from: "NailSuite Leads <leads@nailsuite.com>",
+        // Notify via Sequenzy transactional email API
+        const SEQUENZY_API_KEY = process.env.SEQUENZY_API_KEY ?? "";
+        const sendPayload = {
           to: "hello@nailsuite.com",
           subject: `New NailSuite Lead: ${lead.name}`,
-          html: `<h2>New Lead</h2>
-<pre>${JSON.stringify(lead, null, 2)}</pre>`,
-        });
+          body: `<h2>New Lead</h2><pre>${JSON.stringify(lead, null, 2)}</pre>`,
+        };
 
-        if (sendError) {
+        try {
+          const seqRes = await fetch(
+            "https://api.sequenzy.com/api/v1/transactional/send",
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${SEQUENZY_API_KEY}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(sendPayload),
+            },
+          );
+          if (!seqRes.ok) {
+            const errBody = await seqRes.text();
+            // eslint-disable-next-line no-console
+            console.error("[LEAD] Sequenzy send failed", seqRes.status, errBody);
+          }
+        } catch (seqErr) {
           // eslint-disable-next-line no-console
-          console.error("[LEAD] Resend failed", sendError);
+          console.error("[LEAD] Sequenzy request error", seqErr);
         }
 
         return Response.json(
