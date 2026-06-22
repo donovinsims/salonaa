@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
 // TODO: Replace with actual production domain
-const ALLOWED_ORIGIN = "https://example.com";
+const ALLOWED_ORIGIN = "https://nailsuite.vercel.app";
 
 const LeadSchema = z.object({
   name: z.string().trim().min(1).max(120),
@@ -82,12 +82,21 @@ export const Route = createFileRoute("/api/public/lead")({
         // eslint-disable-next-line no-console
         console.log("[LEAD]", JSON.stringify(redacted));
 
-        // TODO: Wire lead delivery — e.g., send via Resend to your email
-        // or CRM webhook. Requires RESEND_API_KEY as a Cloudflare secret.
-        // Example:
-        // const { Resend } = await import("resend");
-        // const resend = new Resend(process.env.RESEND_API_KEY);
-        // await resend.emails.send({ ... });
+        // Notify via Resend
+        const { Resend } = await import("resend");
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        const { error: sendError } = await resend.emails.send({
+          from: "NailSuite Leads <leads@nailsuite.com>",
+          to: "hello@nailsuite.com",
+          subject: `New NailSuite Lead: ${lead.name}`,
+          html: `<h2>New Lead</h2>
+<pre>${JSON.stringify(lead, null, 2)}</pre>`,
+        });
+
+        if (sendError) {
+          // eslint-disable-next-line no-console
+          console.error("[LEAD] Resend failed", sendError);
+        }
 
         return Response.json(
           { ok: true },

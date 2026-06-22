@@ -3,11 +3,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 export const Route = createFileRoute("/guarantee")({
   head: () => ({
     meta: [
-      { title: "60-Day Salon Savings Guarantee — Salon Suite" },
+      { title: "60-Day Salon Savings Guarantee — NailSuite" },
       {
         name: "description",
         content:
-          "The 60-Day Salon Savings Guarantee: if Salon Suite doesn't save you at least $1,000 in fees within 60 days, we refund every cent. Risk-free.",
+          "The 60-Day Salon Savings Guarantee: if NailSuite doesn't save you at least $1,000 in fees within 60 days, we refund every cent. Risk-free.",
       },
       { name: "robots", content: "index, follow" },
     ],
@@ -30,7 +30,7 @@ function GuaranteePage() {
         </h1>
         <div className="mt-8 space-y-4 text-sm leading-relaxed text-muted-foreground">
           <p>
-            Install Salon Suite. Use it for 60 days. If you haven't saved at least $1,000 in
+            Install NailSuite. Use it for 60 days. If you haven't saved at least $1,000 in
             combined subscription and processing fees compared to your previous system, we refund
             the full license fee — and help you migrate back.
           </p>

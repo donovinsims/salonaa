@@ -3,10 +3,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
-      { title: "Terms of Service — Salon Suite" },
+      { title: "Terms of Service — NailSuite" },
       {
         name: "description",
-        content: "Terms of Service for Salon Suite — your rights and obligations when purchasing the Salon Independence Kit.",
+        content: "Terms of Service for NailSuite — your rights and obligations when purchasing the Nail Salon Independence Kit.",
       },
     ],
   }),
@@ -33,7 +33,7 @@ function TermsPage() {
             <h2 className="mb-2 text-base font-semibold text-foreground">1. License Grant</h2>
             <p>
               Upon purchase of the Single-Use License ($797), you receive a non-exclusive,
-              non-transferable license to use the Salon Suite codebase at a single business
+              non-transferable license to use the NailSuite codebase at a single business
               location. You may not resell, redistribute, or sublicense the code.
             </p>
           </section>
@@ -41,7 +41,7 @@ function TermsPage() {
           <section>
             <h2 className="mb-2 text-base font-semibold text-foreground">2. Ownership</h2>
             <p>
-              You own the code you deploy. Salon Suite retains copyright of the original template.
+              You own the code you deploy. NailSuite retains copyright of the original template.
               Your modifications, branding, and data are your property.
             </p>
           </section>
@@ -62,15 +62,15 @@ function TermsPage() {
             <p>
               DIY License holders receive 12 months of updates and email support. Done-For-You
               clients receive 12 months of priority support. Support is provided via email at
-              support@salonsuite.com during regular business hours.
+              support@nailsuite.com during regular business hours.
             </p>
           </section>
 
           <section>
             <h2 className="mb-2 text-base font-semibold text-foreground">5. Limitation of Liability</h2>
             <p>
-              Salon Suite is provided "as is" without warranty of any kind. In no event shall
-              Salon Suite be liable for any damages arising from the use of the software. This
+              NailSuite is provided "as is" without warranty of any kind. In no event shall
+              NailSuite be liable for any damages arising from the use of the software. This
               does not affect your statutory rights.
             </p>
           </section>
@@ -78,8 +78,8 @@ function TermsPage() {
           <section>
             <h2 className="mb-2 text-base font-semibold text-foreground">6. Contact</h2>
             <p>
-              Salon Suite · Roscoe, IL<br />
-              support@salonsuite.com
+              NailSuite · Roscoe, IL<br />
+              support@nailsuite.com
             </p>
           </section>
         </div>

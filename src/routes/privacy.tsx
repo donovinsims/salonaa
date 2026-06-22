@@ -3,10 +3,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
-      { title: "Privacy Policy — Salon Suite" },
+      { title: "Privacy Policy — NailSuite" },
       {
         name: "description",
-        content: "Privacy Policy for Salon Suite — how we handle your data.",
+        content: "Privacy Policy for NailSuite — how we handle your data.",
       },
     ],
   }),
@@ -60,7 +60,7 @@ function PrivacyPage() {
           <section>
             <h2 className="mb-2 text-base font-semibold text-foreground">4. Your salon's data</h2>
             <p>
-              When you deploy the Salon Suite codebase, client and booking data lives in your own
+              When you deploy the NailSuite codebase, client and booking data lives in your own
               database, on your own cloud infrastructure. We do not have access to the data stored
               in your deployment unless you explicitly grant it for support.
             </p>
@@ -70,15 +70,15 @@ function PrivacyPage() {
             <h2 className="mb-2 text-base font-semibold text-foreground">5. Your rights</h2>
             <p>
               You may request access to, correction of, or deletion of your personal data at any
-              time by emailing support@salonsuite.com.
+              time by emailing support@nailsuite.com.
             </p>
           </section>
 
           <section>
             <h2 className="mb-2 text-base font-semibold text-foreground">6. Contact</h2>
             <p>
-              Salon Suite · Roscoe, IL<br />
-              support@salonsuite.com
+              NailSuite · Roscoe, IL<br />
+              support@nailsuite.com
             </p>
           </section>
         </div>

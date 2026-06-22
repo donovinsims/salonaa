@@ -9,10 +9,11 @@ import {
 } from "@tanstack/react-router";
 import { type ReactNode } from "react";
 
+import { PostHogProvider } from "@/components/posthog-provider";
 import appCss from "../styles.css?url";
 
-// TODO: Replace with actual production domain
-const SITE_URL = "https://example.com";
+// Production domain: nailsuite.vercel.app
+const SITE_URL = "https://nailsuite.vercel.app";
 
 function NotFoundComponent() {
   return (
@@ -76,15 +77,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Salon Suite — Own Your Booking Site. Stop the $15k Tax." },
+      { title: "NailSuite — Own Your Booking Site. Stop the $15k Tax." },
       { name: "description", content: "Own your salon's booking site, customer list, and Stripe payments — for a one-time $797 fee. 10-chair salons keep $15k–$21k/year. 60-Day Salon Savings Guarantee." },
-      { name: "author", content: "Salon Suite" },
+      { name: "author", content: "NailSuite" },
       // TODO: Replace with actual Google Search Console verification token
       { name: "google-site-verification", content: "YOUR_VERIFICATION_TOKEN" },
-      { property: "og:title", content: "Salon Suite — Stop Paying the $15k Booksy Tax" },
+      { property: "og:title", content: "NailSuite — Stop Paying the $15k Booksy Tax" },
       { property: "og:description", content: "Own your booking site and back office for a one-time $797. 60-Day Salon Savings Guarantee." },
       { property: "og:type", content: "website" },
-      { name: "twitter:title", content: "Salon Suite" },
+      { name: "twitter:title", content: "NailSuite" },
       { name: "twitter:description", content: "Own your salon booking site for a one-time $797. Save $15k+/year vs Booksy + Square." },
       // TODO: Replace with user's OG image at /og-image.png (1200×630 PNG)
       { property: "og:image", content: "/og-image.png" },
@@ -105,18 +106,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@graph": [
             {
               "@type": "Organization",
-              name: "Salon Suite",
+              name: "NailSuite",
               url: SITE_URL,
-              description: "The Salon Independence Kit — white-label nail-salon booking/POS codebase sold as a one-time license.",
+              description: "The Nail Salon Independence Kit — white-label nail-salon booking/POS codebase sold as a one-time license.",
               contactPoint: {
                 "@type": "ContactPoint",
-                email: "support@salonsuite.com",
+                email: "support@nailsuite.com",
                 contactType: "customer support",
               },
             },
             {
               "@type": "LocalBusiness",
-              name: "Salon Suite",
+              name: "NailSuite",
               url: SITE_URL,
               areaServed: "US",
               availableLanguage: "en",
@@ -151,8 +152,10 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <PostHogProvider>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+      </PostHogProvider>
     </QueryClientProvider>
   );
 }

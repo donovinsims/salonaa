@@ -3,11 +3,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 export const Route = createFileRoute("/features")({
   head: () => ({
     meta: [
-      { title: "Salon Suite Features — Booking, Dashboard, Commission Tracking" },
+      { title: "NailSuite Features — Booking, Dashboard, Commission Tracking" },
       {
         name: "description",
         content:
-          "Explore everything Salon Suite includes: booking website, owner dashboard, walk-in checkout, commission tracking, SMS confirmations, and your own Stripe payments — all for a one-time fee.",
+          "Explore everything NailSuite includes: booking website, owner dashboard, walk-in checkout, commission tracking, SMS confirmations, and your own Stripe payments — all for a one-time fee.",
       },
       { name: "robots", content: "index, follow" },
     ],

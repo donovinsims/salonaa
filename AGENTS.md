@@ -1,4 +1,4 @@
-# Salon Suite — AGENTS.md
+# NailSuite — AGENTS.md
 
 ## Stack
 
@@ -62,6 +62,6 @@ There is no built-in typecheck script. Run `bunx tsc --noEmit` to check types.
 
 ## Product context
 
-This is a **single-page marketing site** for "Salon Suite — The Salon Independence Kit," a white-label nail-salon booking/POS codebase sold to salon owners. Two tiers: DIY License ($797, self-install) and Done-For-You Setup ($5,797, includes deployment).
+This is a **single-page marketing site** for "NailSuite — The Nail Salon Independence Kit," a white-label nail-salon booking/POS codebase sold to salon owners. Two tiers: DIY License ($797, self-install) and Done-For-You Setup ($5,797, includes deployment).
 
 The site is currently being fixed/updated — see `docs/doc-1-open-code-fix-prompt-what-you-provide.md` for the detailed evolution plan.

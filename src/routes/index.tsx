@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
+import { captureEvent } from "@/lib/posthog";
 import {
   Sparkles,
   DollarSign,
@@ -51,14 +52,10 @@ function loadCal(): Promise<void> {
 }
 
 // ---- Conversion tracking ---------------------------------------------------
-// TODO: Wire analytics provider (GA4 / Plausible) and replace this stub.
-// When ready, uncomment the gtag call and set your measurement ID as a
-// Cloudflare environment variable.
 type TrackPayload = Record<string, string | number | boolean | undefined>;
 function track(event: string, payload: TrackPayload = {}) {
   if (typeof window === "undefined") return;
-  // eslint-disable-next-line no-console
-  console.log("[track]", event, payload);
+  captureEvent(event, payload);
 }
 
 const FAQ_ITEMS: { q: string; a: string }[] = [
@@ -72,7 +69,7 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
   },
   {
     q: "Can I migrate from Booksy or Vagaro without losing my client list?",
-    a: "Yes — we help you export your client list, appointments, and service catalog to a CSV that you import into Salon Suite. It's not one-click, but we provide a detailed runbook, and DFY clients get hands-on assistance. Most salons make the switch over a single weekend with zero booking downtime.",
+    a: "Yes — we help you export your client list, appointments, and service catalog to a CSV that you import into NailSuite. It's not one-click, but we provide a detailed runbook, and DFY clients get hands-on assistance. Most salons make the switch over a single weekend with zero booking downtime.",
   },
   {
     q: "What's your refund policy?",
@@ -126,14 +123,14 @@ const PRICE_LOCK_DATE = "July 15";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Salon Suite — Own Your Booking Site. Stop the $15k Tax." },
+      { title: "NailSuite — Own Your Booking Site. Stop the $15k Tax." },
       {
         name: "description",
         content:
           "Own your booking site, POS, and back office for a one-time $797. 10-chair salons save $15k–$21k/year vs Booksy + Square. Backed by the 60-Day Salon Savings Guarantee.",
       },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { property: "og:title", content: "Salon Suite — Own Your Booking Site. Stop the $15k Tax." },
+      { property: "og:title", content: "NailSuite — Own Your Booking Site. Stop the $15k Tax." },
       {
         property: "og:description",
         content:
@@ -141,7 +138,7 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Salon Suite — Own Your Booking Site" },
+      { name: "twitter:title", content: "NailSuite — Own Your Booking Site" },
       {
         name: "twitter:description",
         content: "Own your salon booking site for a one-time $797. Save $15k+/year.",
@@ -155,10 +152,10 @@ export const Route = createFileRoute("/")({
           "@graph": [
             {
               "@type": "Product",
-              name: "Salon Suite — Own Your Booking Site",
+              name: "NailSuite — Own Your Booking Site",
               description:
                 "Complete nail salon management system: booking website, owner dashboard, commission tracking, and walk-in checkout. Built for salon owners.",
-              brand: { "@type": "Brand", name: "Salon Suite" },
+              brand: { "@type": "Brand", name: "NailSuite" },
               offers: [
                 { "@type": "Offer", name: "Single-Use License", price: "797", priceCurrency: "USD", availability: "https://schema.org/InStock" },
                 { "@type": "Offer", name: "Integration & Deployment", price: "5797", priceCurrency: "USD", availability: "https://schema.org/InStock" },
@@ -277,7 +274,7 @@ function Nav() {
           <span className="grid h-8 w-8 place-items-center rounded-lg bg-[var(--ink)] text-[var(--background)]">
             <Sparkles className="h-4 w-4" />
           </span>
-          <span>Salon Suite</span>
+          <span>NailSuite</span>
         </a>
         <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
           <a href="#features" className="hover:text-foreground">Features</a>
@@ -288,10 +285,10 @@ function Nav() {
         <div className="flex items-center gap-2">
           <a
             href="#offer"
-            onClick={() => track("cta_click", { location: "nav_buy", label: "Buy — $797" })}
+            onClick={() => track("cta_click", { location: "nav_buy", label: "Buy — $597" })}
             className="rounded-full bg-[var(--ink)] px-4 py-2 text-sm font-medium text-[var(--background)] transition hover:opacity-90"
           >
-            Buy — $797
+            Buy — $597
           </a>
           <button
             type="button"
@@ -338,10 +335,10 @@ function Hero() {
           <div className="mx-auto mt-9 flex max-w-md flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:justify-center">
             <a
               href="#offer"
-              onClick={() => track("cta_click", { location: "hero_buy", label: "Buy — $797" })}
+              onClick={() => track("cta_click", { location: "hero_buy", label: "Buy — $597" })}
               className="group inline-flex items-center justify-center gap-2 rounded-full bg-[var(--ink)] pl-6 pr-5 py-3.5 text-sm font-medium text-[var(--background)] shadow-[var(--shadow-elegant)] transition hover:-translate-y-px"
             >
-              Buy the Salon Independence Kit — $797
+              Buy the Nail Salon Independence Kit — $597
               <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
             </a>
             <CalLink location="hero_call" variant="secondary" className="sm:w-auto">
@@ -439,7 +436,7 @@ function Pain() {
             <div className="mt-2 font-mono text-3xl font-semibold tracking-tight text-[var(--ink)] sm:text-4xl">≈ $19k<span className="text-base font-normal text-muted-foreground">/yr</span></div>
           </div>
           <div className="sm:border-x sm:border-border sm:px-6">
-            <div className="text-xs uppercase tracking-wider text-muted-foreground">Salon Suite license</div>
+            <div className="text-xs uppercase tracking-wider text-muted-foreground">NailSuite license</div>
             <div className="mt-2 font-mono text-3xl font-semibold tracking-tight text-[var(--ink)] sm:text-4xl">$797<span className="text-base font-normal text-muted-foreground"> · once</span></div>
           </div>
           <div>
@@ -706,7 +703,7 @@ function Offer() {
         <div className="mx-auto max-w-3xl text-center">
           <span className="text-xs font-medium uppercase tracking-wider text-[var(--rose)]">Pricing</span>
           <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-5xl">
-            The Salon Independence Kit.
+            The Nail Salon Independence Kit.
           </h2>
           <p className="mt-5 text-pretty text-lg text-muted-foreground">
             You're not renting software. You're buying an asset.
@@ -718,7 +715,7 @@ function Offer() {
           <div className="mx-auto mt-7 flex max-w-2xl flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
             <span className="inline-flex items-center gap-2 rounded-full border border-[var(--rose)]/40 bg-[var(--blush)]/40 px-4 py-1.5 text-sm font-medium text-[var(--ink)]">
               <Clock className="h-3.5 w-3.5" />
-              Price increases to $997 on {PRICE_LOCK_DATE} — lock in $797 today
+              Founding Price — $597 ($200 off) · price increases to $797 on {PRICE_LOCK_DATE}
             </span>
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-sm font-medium text-foreground">
               <Shield className="h-3.5 w-3.5" />
@@ -738,10 +735,11 @@ function Offer() {
                 <div className="text-xs uppercase tracking-wider text-muted-foreground">DIY License</div>
                 <div className="mt-1 text-lg font-medium">Install it yourself</div>
                 <div className="mt-3 flex items-baseline gap-2">
-                  <span className="text-4xl font-semibold tracking-tight">$797</span>
+                  <span className="text-4xl font-semibold tracking-tight">$597</span>
                   <span className="text-sm text-muted-foreground line-through">$3,385 value</span>
+                  <span className="ml-1 rounded-full bg-[var(--rose)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">Founding</span>
                 </div>
-                <div className="text-xs text-muted-foreground">one-time · install yourself</div>
+                <div className="text-xs text-muted-foreground">$797 regular · founding pricing ends soon</div>
               </div>
             </div>
             <p className="mt-5 text-sm text-muted-foreground">
@@ -798,11 +796,12 @@ function Offer() {
             </details>
             <div className="mt-auto pt-7 space-y-3">
               <a
-                href="mailto:support@salonsuite.com?subject=Buy%20the%20Salon%20Independence%20Kit%20%E2%80%94%20%24797"
-                onClick={() => track("cta_click", { location: "offer_diy_buy", label: "Buy Now — $797" })}
+                href="https://buy.polar.sh/polar_cl_gsORyMWrkMpFp1XfZYo0b8hF0HDTkV9dUPhab1Fdg67"
+                target="_blank" rel="noopener noreferrer"
+                onClick={() => track("cta_click", { location: "offer_diy_buy", label: "Buy Now — $597" })}
                 className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--ink)] pl-6 pr-5 py-3.5 text-sm font-medium text-[var(--background)] shadow-[var(--shadow-elegant)] transition hover:-translate-y-px"
               >
-                Buy Now — $797
+                Buy Now — $597
                 <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
               </a>
               <CalLink location="offer_diy_call" variant="secondary" className="w-full">
@@ -876,7 +875,8 @@ function Offer() {
             </div>
             <div className="mt-auto pt-7 space-y-3">
               <a
-                href="mailto:support@salonsuite.com?subject=Done-For-You%20Setup%20%E2%80%94%20%245%2C797"
+                href="https://buy.polar.sh/polar_cl_3Ja5eYc5dLgkxnPnk7PRRxa9ELMO1P3P6R2N82PMb6A"
+                target="_blank" rel="noopener noreferrer"
                 onClick={() => track("cta_click", { location: "offer_dfy_buy", label: "Buy Now — $5,797" })}
                 className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--ink)] pl-6 pr-5 py-3.5 text-sm font-medium text-[var(--background)] shadow-[var(--shadow-elegant)] transition hover:-translate-y-px"
               >
@@ -935,7 +935,7 @@ function LeadCapture() {
           The Booksy Fee Calculator
         </h2>
         <p className="mt-3 text-sm text-muted-foreground">
-          See exactly how much your salon is paying in fees — and how much you'd save with Salon Suite.
+          See exactly how much your salon is paying in fees — and how much you'd save with NailSuite.
         </p>
         <form
           method="POST"
@@ -989,10 +989,10 @@ function Footer() {
             <span className="grid h-7 w-7 place-items-center rounded-md bg-[var(--ink)] text-[var(--background)]">
               <Sparkles className="h-3.5 w-3.5" />
             </span>
-            <span className="font-medium text-foreground">Salon Suite</span>
+            <span className="font-medium text-foreground">NailSuite</span>
           </div>
           <p className="mt-3 max-w-xs text-xs">
-            The Salon Independence Kit — own your booking site, customer list, and payments.
+            The Nail Salon Independence Kit — own your booking site, customer list, and payments.
             One-time fee. Forever yours.
           </p>
           <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-foreground">
@@ -1013,14 +1013,14 @@ function Footer() {
         <div>
           <div className="text-xs font-semibold uppercase tracking-wider text-foreground">Contact</div>
           <ul className="mt-3 space-y-2">
-            <li className="flex items-center gap-2"><Mail className="h-3.5 w-3.5" /> <a href="mailto:support@salonsuite.com" className="hover:text-foreground">support@salonsuite.com</a></li>
-             <li className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5" /> Salon Suite · Roscoe, IL</li>
+            <li className="flex items-center gap-2"><Mail className="h-3.5 w-3.5" /> <a href="mailto:support@nailsuite.com" className="hover:text-foreground">support@nailsuite.com</a></li>
+             <li className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5" /> NailSuite · Roscoe, IL</li>
           </ul>
         </div>
       </div>
       <div className="border-t border-border/60">
         <div className="mx-auto max-w-6xl px-5 py-4 text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Salon Suite. You own the code. We don't.
+          © {new Date().getFullYear()} NailSuite. You own the code. We don't.
         </div>
       </div>
     </footer>
@@ -1150,10 +1150,10 @@ function FinalCTA() {
         <div className="mx-auto mt-9 flex max-w-md flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:justify-center">
           <a
             href="#offer"
-            onClick={() => track("cta_click", { location: "final_buy", label: "Buy — $797" })}
+            onClick={() => track("cta_click", { location: "final_buy", label: "Buy — $597" })}
             className="group inline-flex items-center justify-center gap-2 rounded-full bg-[var(--ink)] pl-6 pr-5 py-3.5 text-sm font-medium text-[var(--background)] shadow-[var(--shadow-elegant)] transition hover:-translate-y-px"
           >
-            Buy the Salon Independence Kit — $797
+            Buy the Nail Salon Independence Kit — $597
             <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
           </a>
           <CalLink location="final_call" variant="secondary">
@@ -1162,7 +1162,7 @@ function FinalCTA() {
           </CalLink>
         </div>
         <p className="mt-6 text-xs text-muted-foreground">
-          Price increases to $997 on {PRICE_LOCK_DATE} · 60-Day Salon Savings Guarantee · You own the code — nothing to cancel
+          Founding Price $597 · Price increases to $797 on {PRICE_LOCK_DATE} · 60-Day Salon Savings Guarantee · You own the code — nothing to cancel
         </p>
       </div>
     </section>

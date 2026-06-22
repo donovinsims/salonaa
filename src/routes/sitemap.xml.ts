@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-// TODO: Replace example.com with the actual production domain
-const SITE_URL = "https://example.com";
+// Production domain: nailsuite.vercel.app
+const SITE_URL = "https://nailsuite.vercel.app";
 
 export const Route = createFileRoute("/sitemap/xml")({
   server: {
