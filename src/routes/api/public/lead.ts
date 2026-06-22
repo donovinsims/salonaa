@@ -85,7 +85,7 @@ export const Route = createFileRoute("/api/public/lead")({
         // Notify via Sequenzy transactional email API
         const SEQUENZY_API_KEY = process.env.SEQUENZY_API_KEY ?? "";
         const sendPayload = {
-          to: "hello@nailsuite.com",
+          to: "nailsuite@clockout.us",
           from: "NailSuite <nailsuite@clockout.us>",
           subject: `New NailSuite Lead: ${lead.name}`,
           preview: `${lead.name} — ${lead.email}`,

@@ -1013,7 +1013,7 @@ function Footer() {
         <div>
           <div className="text-xs font-semibold uppercase tracking-wider text-foreground">Contact</div>
           <ul className="mt-3 space-y-2">
-            <li className="flex items-center gap-2"><Mail className="h-3.5 w-3.5" /> <a href="mailto:support@nailsuite.com" className="hover:text-foreground">support@nailsuite.com</a></li>
+            <li className="flex items-center gap-2"><Mail className="h-3.5 w-3.5" /> <a href="mailto:nailsuite@clockout.us" className="hover:text-foreground">nailsuite@clockout.us</a></li>
              <li className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5" /> NailSuite · Roscoe, IL</li>
           </ul>
         </div>

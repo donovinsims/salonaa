@@ -62,7 +62,7 @@ function TermsPage() {
             <p>
               DIY License holders receive 12 months of updates and email support. Done-For-You
               clients receive 12 months of priority support. Support is provided via email at
-              support@nailsuite.com during regular business hours.
+              nailsuite@clockout.us during regular business hours.
             </p>
           </section>
 
@@ -79,7 +79,7 @@ function TermsPage() {
             <h2 className="mb-2 text-base font-semibold text-foreground">6. Contact</h2>
             <p>
               NailSuite · Roscoe, IL<br />
-              support@nailsuite.com
+              nailsuite@clockout.us
             </p>
           </section>
         </div>

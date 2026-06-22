@@ -111,7 +111,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               description: "The Nail Salon Independence Kit — white-label nail-salon booking/POS codebase sold as a one-time license.",
               contactPoint: {
                 "@type": "ContactPoint",
-                email: "support@nailsuite.com",
+                email: "nailsuite@clockout.us",
                 contactType: "customer support",
               },
             },

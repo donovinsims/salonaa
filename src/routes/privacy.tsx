@@ -70,7 +70,7 @@ function PrivacyPage() {
             <h2 className="mb-2 text-base font-semibold text-foreground">5. Your rights</h2>
             <p>
               You may request access to, correction of, or deletion of your personal data at any
-              time by emailing support@nailsuite.com.
+              time by emailing nailsuite@clockout.us.
             </p>
           </section>
 
@@ -78,7 +78,7 @@ function PrivacyPage() {
             <h2 className="mb-2 text-base font-semibold text-foreground">6. Contact</h2>
             <p>
               NailSuite · Roscoe, IL<br />
-              support@nailsuite.com
+              nailsuite@clockout.us
             </p>
           </section>
         </div>
