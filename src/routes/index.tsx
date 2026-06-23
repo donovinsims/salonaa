@@ -1,12 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { captureEvent } from "@/lib/posthog";
+import Nav, { CAL_LINK, BUY_LINK, loadCal } from "@/components/nav";
 import {
   Sparkles,
   DollarSign,
   Users,
   CreditCard,
   Check,
+  ChevronDown,
   X,
   ArrowRight,
   Calendar,
@@ -28,28 +30,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
-const CAL_LINK = "donovin"; // cal.com/donovin
-
-// ---- Cal.com lazy loader ---------------------------------------------------
-// Defer the embed-react bundle + Cal script until user signals intent
-// (hover, focus, or first click). Keeps initial JS lean — visitors who
-// never book never pay the cost of the Cal embed.
-let calLoadPromise: Promise<void> | null = null;
-function loadCal(): Promise<void> {
-  if (typeof window === "undefined") return Promise.resolve();
-  if (calLoadPromise) return calLoadPromise;
-  calLoadPromise = import("@calcom/embed-react").then(async (mod) => {
-    const cal = await mod.getCalApi();
-    cal("ui", {
-      theme: "light",
-      styles: { branding: { brandColor: "#111111" } },
-      hideEventTypeDetails: false,
-      layout: "month_view",
-    });
-  });
-  return calLoadPromise;
-}
 
 // ---- Conversion tracking ---------------------------------------------------
 type TrackPayload = Record<string, string | number | boolean | undefined>;
@@ -123,14 +103,14 @@ const PRICE_LOCK_DATE = "July 15";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "NailSuite — Own Your Booking Site. Stop the $15k Tax." },
+      { title: "NailSuite — Own Your Booking Site. Stop the $19k Tax." },
       {
         name: "description",
         content:
           "Own your booking site, POS, and back office for a one-time $797. 10-chair salons save $15k–$21k/year vs Booksy + Square. Backed by the 60-Day Salon Savings Guarantee.",
       },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { property: "og:title", content: "NailSuite — Own Your Booking Site. Stop the $15k Tax." },
+      { property: "og:title", content: "NailSuite — Own Your Booking Site. Stop the $19k Tax." },
       {
         property: "og:description",
         content:
@@ -198,7 +178,7 @@ function Index() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground scroll-p-20">
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-[var(--ink)] focus:px-4 focus:py-2 focus:text-sm focus:text-[var(--background)]"
@@ -206,10 +186,24 @@ function Index() {
         Skip to content
       </a>
       <Nav />
+
+      {/* Sticky mobile Buy CTA */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-background/95 backdrop-blur-sm p-3 sm:hidden">
+        <a
+          href={BUY_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex w-full items-center justify-center rounded-lg bg-[var(--rose)] px-5 py-3 text-sm font-semibold text-white shadow-lg hover:bg-[var(--rose)]/90 transition-colors"
+        >
+          Buy NailSuite — $597
+        </a>
+      </div>
+
       <main id="main">
         <Hero />
         <SocialProof />
         <Pain />
+        <LeadCapture />
         <Solution />
         <HowItWorks />
         <Features />
@@ -217,7 +211,6 @@ function Index() {
         <Offer />
         <FinalCTA />
         <FAQ />
-        <LeadCapture />
       </main>
       <Footer />
     </div>
@@ -266,52 +259,6 @@ function CalLink({
   );
 }
 
-function Nav() {
-  return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-        <a href="#top" className="flex items-center gap-2 font-semibold tracking-tight">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-[var(--ink)] text-[var(--background)]">
-            <Sparkles className="h-4 w-4" />
-          </span>
-          <span>NailSuite</span>
-        </a>
-        <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
-          <a href="#features" className="hover:text-foreground">Features</a>
-          <a href="#fit" className="hover:text-foreground">Who it's for</a>
-          <a href="#offer" className="hover:text-foreground">Pricing</a>
-          <a href="#faq" className="hover:text-foreground">FAQ</a>
-        </nav>
-        <div className="flex items-center gap-2">
-          <a
-            href="#offer"
-            onClick={() => track("cta_click", { location: "nav_buy", label: "Buy — $597" })}
-            className="rounded-full bg-[var(--ink)] px-4 py-2 text-sm font-medium text-[var(--background)] transition hover:opacity-90"
-          >
-            Buy — $597
-          </a>
-          <button
-            type="button"
-            data-cal-link={CAL_LINK}
-            data-cal-namespace=""
-            data-cal-config='{"layout":"month_view","theme":"light"}'
-            onMouseEnter={() => void loadCal()}
-            onFocus={() => void loadCal()}
-            onTouchStart={() => void loadCal()}
-            onClick={() => {
-              void loadCal();
-              track("cta_click", { location: "nav" });
-            }}
-            className="hidden rounded-full border border-border bg-card px-3.5 py-2 text-sm font-medium text-foreground transition hover:bg-muted sm:inline-flex"
-          >
-            Book a free 15-min call
-          </button>
-        </div>
-      </div>
-    </header>
-  );
-}
-
 function Hero() {
   return (
     <section id="top" className="relative overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
@@ -319,10 +266,10 @@ function Hero() {
         <div className="mx-auto max-w-3xl text-center">
           <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-6xl">
             Run your salon without the{" "}
-            <span className="relative whitespace-nowrap text-[var(--rose)]">$15,000 Booksy tax</span>.
+            <span className="relative whitespace-nowrap text-[var(--rose)]">$19,000 Booksy + Square tax</span>.
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg text-muted-foreground sm:text-xl">
-            Escape the $15k/year Booksy tax. Keep your customer list. Take home every booking dollar.
+            Escape the $19k/year Booksy + Square tax. Keep your customer list. Take home every booking dollar.
             <br className="hidden sm:inline" />
             One fee. Forever yours. No hidden costs.
           </p>
@@ -338,7 +285,7 @@ function Hero() {
               onClick={() => track("cta_click", { location: "hero_buy", label: "Buy — $597" })}
               className="group inline-flex items-center justify-center gap-2 rounded-full bg-[var(--ink)] pl-6 pr-5 py-3.5 text-sm font-medium text-[var(--background)] shadow-[var(--shadow-elegant)] transition hover:-translate-y-px"
             >
-              Buy the Nail Salon Independence Kit — $597
+              Buy NailSuite — $597
               <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
             </a>
             <CalLink location="hero_call" variant="secondary" className="sm:w-auto">
@@ -365,11 +312,8 @@ function Hero() {
             <span className="absolute -top-3 left-5 z-10 inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
               <Sparkle className="h-3 w-3" /> Preview · sample data
             </span>
-            <div className="flex items-center gap-1.5 px-2 pb-3">
-              <span className="h-2.5 w-2.5 rounded-full bg-[var(--blush)]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-muted" />
-              <span className="h-2.5 w-2.5 rounded-full bg-muted" />
-              <span className="ml-3 text-xs text-muted-foreground">app.yoursalon.com/admin</span>
+            <div className="px-2 pb-3">
+              <span className="text-xs text-muted-foreground">app.yoursalon.com/admin</span>
             </div>
             <div className="grid grid-cols-1 gap-3 rounded-xl bg-background p-4 md:grid-cols-3">
               <MockKpi label="Today" value="$2,840" sub="32 bookings" />
@@ -379,10 +323,7 @@ function Hero() {
                 <div className="mb-3 flex items-center justify-between text-sm">
                   <span className="font-medium">Floor — live</span>
                   <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <span className="relative flex h-2 w-2">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--rose)] opacity-75" />
-                      <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--rose)]" />
-                    </span>
+                    <span className="inline-flex h-2 w-2 rounded-full bg-[var(--rose)]" />
                     realtime
                   </span>
                 </div>
@@ -448,7 +389,7 @@ function Pain() {
         <details className="group mt-6 rounded-xl border border-border bg-background p-5">
           <summary className="flex cursor-pointer items-center justify-between text-sm font-medium text-foreground">
             <span>See the breakdown — the three taxes you're paying</span>
-            <span className="text-xs text-muted-foreground transition group-open:rotate-180">▾</span>
+            <ChevronDown className="h-4 w-4 text-muted-foreground transition group-open:rotate-180" />
           </summary>
           <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
             <li className="flex items-start gap-3">
@@ -508,16 +449,23 @@ function Solution() {
               </li>
             ))}
             </ul>
-              {/* DEMO VIDEO — place your Loom/YT embed URL here */}
+              {/* DEMO VIDEO — placeholder until recording is ready */}
               <div className="mt-8 rounded-xl border border-border bg-card p-4 text-center">
                 <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   See it in action (2 min)
                 </p>
-                <div className="mt-3 aspect-video rounded-lg bg-muted flex items-center justify-center">
-                  <span className="text-sm text-muted-foreground">
-                    🎥 Demo video — drop your Loom or YouTube URL here
-                  </span>
-                </div>
+                <p className="mt-3 text-sm text-muted-foreground">
+                  Live demo walkthrough coming soon. In the meantime,{" "}
+                  <a
+                    href="https://cal.com/clockout/15min"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-2 hover:text-[var(--rose)]"
+                  >
+                    book a free 15-min call
+                  </a>{" "}
+                  for a personalized walkthrough.
+                </p>
               </div>
           </div>
 
@@ -601,9 +549,9 @@ function Features() {
             Everything Booksy and Square do — without the monthly bill.
           </h2>
         </div>
-        <div className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {items.map(({ icon: Icon, title, body }) => (
-            <div key={title} className="bg-background p-7">
+            <div key={title} className="rounded-xl border border-border bg-background p-6">
               <div className="grid h-10 w-10 place-items-center rounded-lg bg-[var(--blush)] text-[var(--ink)]">
                 <Icon className="h-5 w-5" />
               </div>
@@ -631,7 +579,7 @@ function Disqualify() {
       </div>
 
       <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2">
-        <div className="rounded-2xl border border-border bg-card p-7">
+        <div className="rounded-2xl border border-border bg-card p-6">
           <div className="flex items-center gap-2 text-sm font-medium text-[var(--ink)]">
             <span className="grid h-7 w-7 place-items-center rounded-full bg-[var(--blush)]">
               <Check className="h-4 w-4" />
@@ -654,7 +602,7 @@ function Disqualify() {
         </div>
 
           {/* Micro-commitment — "Which path is right for you?" */}
-          <div className="rounded-2xl border border-dashed border-[var(--rose)]/40 bg-[var(--blush)]/20 p-7 md:col-span-2">
+          <div className="rounded-2xl border border-dashed border-[var(--rose)]/40 bg-[var(--blush)]/20 p-6 md:col-span-2">
             <h3 className="text-center text-base font-semibold">
               Not sure if this is for you?
             </h3>
@@ -669,7 +617,7 @@ function Disqualify() {
             </div>
           </div>
 
-        <div className="rounded-2xl border border-dashed border-border bg-background p-7">
+        <div className="rounded-2xl border border-dashed border-border bg-background p-6">
           <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
             <span className="grid h-7 w-7 place-items-center rounded-full bg-muted">
               <X className="h-4 w-4" />
@@ -703,7 +651,7 @@ function Offer() {
         <div className="mx-auto max-w-3xl text-center">
           <span className="text-xs font-medium uppercase tracking-wider text-[var(--rose)]">Pricing</span>
           <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-5xl">
-            The Nail Salon Independence Kit.
+            NailSuite — The Nail Salon Independence Kit.
           </h2>
           <p className="mt-5 text-pretty text-lg text-muted-foreground">
             You're not renting software. You're buying an asset.
@@ -787,8 +735,11 @@ function Offer() {
                 </li>
               </ul>
             </div>
-            <details className="mt-4 rounded-xl border border-border bg-background/60 p-4 text-sm">
-              <summary className="cursor-pointer font-medium">What you'll need to install it</summary>
+            <details className="group mt-4 rounded-xl border border-border bg-background/60 p-4 text-sm">
+              <summary className="flex cursor-pointer items-center justify-between font-medium">
+                <span>What you'll need to install it</span>
+                <ChevronDown className="h-4 w-4 text-muted-foreground transition group-open:rotate-180" />
+              </summary>
               <p className="mt-2 text-muted-foreground">
                 A domain name, a Stripe account, a Twilio account, and 2–3 hours of focused time. The runbook walks
                 you through each step — no code editing required.
@@ -815,7 +766,7 @@ function Offer() {
           </div>
 
           {/* Integration & Deployment */}
-          <div className="relative flex flex-col rounded-2xl border-2 border-[var(--rose)] bg-card p-8 shadow-[var(--shadow-elegant)]">
+          <div className="relative flex flex-col rounded-2xl border border-[var(--rose)] bg-card p-8 shadow-[var(--shadow-elegant)]">
             <div className="flex items-baseline justify-between">
               <div>
                 <div className="text-xs uppercase tracking-wider text-muted-foreground">Done-For-You Setup</div>
@@ -927,6 +878,8 @@ function Offer() {
 }
 
 function LeadCapture() {
+  const [leadStatus, setLeadStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [leadError, setLeadError] = useState("");
   return (
     <section className="border-t border-border/60 bg-background">
       <div className="mx-auto max-w-3xl px-5 py-20 text-center">
@@ -938,13 +891,27 @@ function LeadCapture() {
           See exactly how much your salon is paying in fees — and how much you'd save with NailSuite.
         </p>
         <form
-          method="POST"
-          action="/api/public/lead"
-          className="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row"
-          onSubmit={(e) => {
-            // Allow default form POST — the API accepts name + email
-            // TODO: replace with fetch + success state on production
+          onSubmit={async (e) => {
+            e.preventDefault();
+            setLeadStatus("loading");
+            setLeadError("");
+            try {
+              const form = e.currentTarget;
+              const data = { name: (form.elements.namedItem("name") as HTMLInputElement)?.value, email: (form.elements.namedItem("email") as HTMLInputElement)?.value };
+              const res = await fetch("/api/public/lead", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+              });
+              if (!res.ok) throw new Error("Submission failed");
+              setLeadStatus("success");
+              form.reset();
+            } catch {
+              setLeadError("Something went wrong. Try again or email us at nailsuite@clockout.us.");
+              setLeadStatus("error");
+            }
           }}
+          className="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row"
         >
           <label className="sr-only" htmlFor="lead-name">Your name</label>
           <input
@@ -966,12 +933,18 @@ function LeadCapture() {
           />
           <button
             type="submit"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--ink)] px-6 py-3 text-sm font-medium text-[var(--background)] transition hover:opacity-90"
+            disabled={leadStatus === "loading"}
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--ink)] px-6 py-3 text-sm font-medium text-[var(--background)] transition hover:opacity-90 disabled:opacity-60"
           >
-            Calculate my savings
-            <ArrowRight className="h-4 w-4" />
+            {leadStatus === "loading" ? "Calculating..." : "Calculate my savings →"}
           </button>
         </form>
+        {leadStatus === "success" && (
+          <p className="mt-3 text-sm text-green-600">Check your email — your savings estimate is on its way!</p>
+        )}
+        {leadStatus === "error" && (
+          <p className="mt-3 text-sm text-red-600">{leadError}</p>
+        )}
         <p className="mt-4 text-xs text-muted-foreground">
           No spam. Unsubscribe any time.
         </p>
@@ -1034,7 +1007,7 @@ function FAQ() {
         <div className="text-center">
           <span className="text-xs font-medium uppercase tracking-wider text-[var(--rose)]">FAQ</span>
           <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-            FAQ
+            Questions salon owners actually ask
           </h2>
           <p className="mt-3 text-sm text-muted-foreground">The stuff salon owners actually ask.</p>
         </div>
@@ -1143,8 +1116,7 @@ function FinalCTA() {
     <section className="border-y border-border/60 bg-card">
       <div className="mx-auto max-w-3xl px-5 py-20 text-center">
         <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-          The $797 question isn't <span className="text-muted-foreground">"Can I afford this?"</span>
-          <br />
+          The $797 question isn't <span className="text-muted-foreground">"Can I afford this?"</span>{" "}
           It's <span className="text-[var(--rose)]">"How much longer can I afford Booksy?"</span>
         </h2>
         <div className="mx-auto mt-9 flex max-w-md flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:justify-center">

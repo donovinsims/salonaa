@@ -1,4 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import Nav from "@/components/nav";
 
 export const Route = createFileRoute("/compare/vagaro")({
   head: () => ({
@@ -17,17 +18,13 @@ export const Route = createFileRoute("/compare/vagaro")({
 
 function CompareVagaroPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-3xl px-5 py-20">
-        <Link
-          to="/"
-          className="mb-8 inline-flex items-center text-sm text-muted-foreground hover:text-foreground"
-        >
-          ← Back to home
-        </Link>
-        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-          NailSuite vs Vagaro
-        </h1>
+    <>
+      <Nav />
+      <div className="min-h-screen bg-background text-foreground">
+        <div className="mx-auto max-w-3xl px-5 py-20">
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+            NailSuite vs Vagaro
+          </h1>
         <p className="mt-4 text-muted-foreground">
           A detailed comparison is coming soon. The short version: NailSuite gives you booking,
           payments, and salon management for a one-time fee — no monthly Vagaro bill eating into
@@ -35,5 +32,6 @@ function CompareVagaroPage() {
         </p>
       </div>
     </div>
+    </>
   );
 }

@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import Nav from "@/components/nav";
 
 export const Route = createFileRoute("/locations/$city")({
   head: ({ params }) => ({
@@ -20,17 +21,13 @@ function CityPage() {
   const { city } = Route.useParams();
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-3xl px-5 py-20">
-        <Link
-          to="/"
-          className="mb-8 inline-flex items-center text-sm text-muted-foreground hover:text-foreground"
-        >
-          ← Back to home
-        </Link>
-        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-          NailSuite in {city}
-        </h1>
+    <>
+      <Nav />
+      <div className="min-h-screen bg-background text-foreground">
+        <div className="mx-auto max-w-3xl px-5 py-20">
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+            NailSuite in {city}
+          </h1>
         <p className="mt-4 text-muted-foreground">
           Nail salon software for independent owners in {city}. A detailed page about NailSuite
           availability and benefits in {city} is coming soon.
@@ -45,5 +42,6 @@ function CityPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

@@ -29,7 +29,7 @@ function NotFoundComponent() {
             to="/"
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            Go home
+            ← Back to home
           </Link>
         </div>
       </div>
@@ -64,7 +64,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
             href="/"
             className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
           >
-            Go home
+            ← Back to home
           </a>
         </div>
       </div>
@@ -139,7 +139,7 @@ function RootShell({ children }: { children: ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="antialiased">
+      <body>
         {children}
         <Scripts />
       </body>

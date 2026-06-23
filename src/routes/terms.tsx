@@ -1,4 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import Nav from "@/components/nav";
 
 export const Route = createFileRoute("/terms")({
   head: () => ({
@@ -15,17 +16,13 @@ export const Route = createFileRoute("/terms")({
 
 function TermsPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-3xl px-5 py-20">
-        <Link
-          to="/"
-          className="mb-8 inline-flex items-center text-sm text-muted-foreground hover:text-foreground"
-        >
-          ← Back to home
-        </Link>
-        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-          Terms of Service
-        </h1>
+    <>
+      <Nav />
+      <div className="min-h-screen bg-background text-foreground">
+        <div className="mx-auto max-w-3xl px-5 py-20">
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+            Terms of Service
+          </h1>
         <p className="mt-2 text-sm text-muted-foreground">Last updated: June 2026</p>
 
         <div className="mt-10 space-y-6 text-sm leading-relaxed text-muted-foreground">
@@ -85,5 +82,6 @@ function TermsPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
